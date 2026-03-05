@@ -1,0 +1,70 @@
+---
+title: "micro_analyze"
+output: html_document
+date: "2026-02-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1. creating figures for basidiospore data to compare sizes
+
+--text take .csv files with spore data for a single specimen and make scatter plots with data
+
+Set working directory, make sure it is the right directory, load 30181 data as spores
+
+```{r}
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
+getwd() #use to see what your current working directory is
+spores1 <- read.csv("30181_basidiospore.csv")
+spores2 <- read.csv("30182_basidiospore.csv")
+spores3 <- read.csv("30183_basidiospore.csv")
+
+spores1$Sample <- "30181"
+spores2$Sample <- "30182"
+spores3$Sample <- "30183"
+
+str(spores1)
+str(spores2)
+str(spores3)
+
+head(spores) #sanity check to make sure data loaded
+```
+#make a scatter plot -24
+```{r}
+library(ggplot2)
+ggplot(spores1, aes(x = Length, y = Width)) +
+  geom_point(color = "darkblue", size = 3) +
+   xlim(0, 15) +
+  ylim(0, 13) +
+  labs(
+    title = "Basidiospore Measurements",
+    x = "Length (µm)",
+    y = "Width (µm)"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+all_spores <- rbind(spores1, spores2, spores3)
+library(ggplot2)
+
+ggplot(all_spores, aes(x = Width, y = Length, color = Sample)) +
+  geom_point(size = 1, alpha = 0.5) +
+  scale_color_manual(values = c("30181" = "darkblue",
+                                "30182" = "blue",
+                                "30183" = "pink")) +
+  xlim(0, 20) +
+  ylim(0, 20) +
+  theme_minimal() +
+  labs(
+    title = "Basidiospore Measurements",
+    x = "Width (µm)",
+    y = "Length (µm)"
+  )
+
+```
+
+
