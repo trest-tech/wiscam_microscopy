@@ -60,7 +60,12 @@ Now moving onto basidia and I'm using a similar work flow just shifting it to fi
 
 The AI has good practice with the basidiospore data at this point so hoping it's a quicker process.
 
-Prompt:
-Ok thanks for all the help. Now I want to organize the basidia data. I will give you the 
+Yeah that was 10x as fast. It populated it perfectly and now I want to inspect the basidia data to see where there are gaps and what needs to be filled in.
+
+```zsh
+cd data/normalized
+python3 map_basidia.py
+```
 
 
+I am going to use R to learn a bit more about what this data is saying. Find the work at 'mh_basid.rmd'
