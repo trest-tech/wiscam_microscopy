@@ -518,42 +518,13 @@ spores30249$Sample <- "30249"
 
 
 str(spores30181)
-str(spores30182)
-str(spores30183)
-str(spores30184)
-str(spores30185)
-str(spores30186)
-str(spores30187)
-str(spores30188)
-str(spores30189)
-str(spores30190) #sanity check to make sure data loaded
-str(spores30191)
-str(spores30192)
-str(spores30193)
-str(spores30194)
-str(spores30195)
-str(spores30196)
-str(spores30197)
-str(spores30198)
-str(spores30199)
-str(spores30201)
-str(spores30202)
-str(spores30203)
-str(spores30204)
-str(spores30205)
-str(spores30206)
-str(spores30207)
-str(spores30208)
-str(spores30209)
-str(spores30212)
-str(spores30226)
 
 head(spores1) #sanity check to make sure data loaded
 
 all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215, spores30221, spores30222, spores30226, spores30230, spores30238, spores30239, spores30244, spores30249)
 library(ggplot2)
 
-# ⭐⭐ STEP 1 GOES RIGHT HERE — BEFORE ggplot() ⭐⭐
+
 group_map <- c(
   "30181"="Phalloidae", "30182"="Phalloidae", "30183"="Roanokensis",
   "30184"="Phalloidae", "30185"="Vaginatae", "30186"="Vaginatae",
@@ -573,8 +544,8 @@ group_map <- c(
 all_spores$Group <- group_map[all_spores$Sample]
 
 
-plot <- ggplot(all_spores, aes(x = Width, y = Length, color = Sample, fill = Group)) +
-  geom_jitter(size = 1, alpha = 0.5, width = 0.1, height = 0.1) +
+plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
+  geom_jitter(shape = 21, size = 2, alpha = 0.7, width = 0.1, height = 0.1) +
   scale_color_manual(values = c("30181" = "blue",
                                 "30182" = "blue",
                                 "30183" = "magenta",
@@ -616,7 +587,7 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, color = Sample, fill = Gro
                                 "30244" = "yellow",
                                 "30249" = "red")) +
   scale_fill_manual(
-    name = "Species Group",
+    name = "Section",
     values = c(
       "Roanokensis"="magenta",
       "Phalloidae"="blue",
@@ -625,7 +596,8 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, color = Sample, fill = Gro
       "Validae"="green",
       "Ceasareae"="orange",
       "Amidella"="purple"
-    )
+    ),
+      aesthetics = "fill"
   ) +
   guides(color = "none") +
   xlim(0, 20) +
