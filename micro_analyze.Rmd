@@ -432,7 +432,7 @@ plot (plot)
 ```{r}
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
 getwd() #use to see what your current working directory is
-#remane each csv to spore30181, etc for easier coding
+#rename each csv to spore30181, etc for easier coding
 spores30181 <- read.csv("30181_basidiospore.csv")
 spores30182 <- read.csv("30182_basidiospore.csv")
 spores30183 <- read.csv("30183_basidiospore.csv")
@@ -517,14 +517,15 @@ spores30244$Sample <- "30244"
 spores30249$Sample <- "30249"
 
 
-str(spores30181)
+str(spores30181) #sanity check to make sure data loaded
 
 head(spores1) #sanity check to make sure data loaded
 
+#combines each specimen to one graph
 all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215, spores30221, spores30222, spores30226, spores30230, spores30238, spores30239, spores30244, spores30249)
 library(ggplot2)
 
-
+#groups each specimen by section
 group_map <- c(
   "30181"="Phalloidae", "30182"="Phalloidae", "30183"="Roanokensis",
   "30184"="Phalloidae", "30185"="Vaginatae", "30186"="Vaginatae",
@@ -586,6 +587,7 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
                                 "30239" = "orange",
                                 "30244" = "yellow",
                                 "30249" = "red")) +
+  #formating
   scale_fill_manual(
     name = "Section",
     values = c(
