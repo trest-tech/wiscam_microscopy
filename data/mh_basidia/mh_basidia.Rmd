@@ -138,10 +138,7 @@ df_spec <- df0 %>%
   mutate(basidia_count = readr::parse_number(as.character(basidia_count))) %>%
   filter(!is.na(basidia_count))
 # Trying to pull section data into separate datasets
-library(sqldf)
 
-df_phal <- read.csv.sql("basidia.csv",
-                    sql = "select * from file where `sectionid` = Phalloideae, eol = "\n")
 ```
 
 
