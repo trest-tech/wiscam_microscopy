@@ -519,7 +519,7 @@ spores30249$Sample <- "30249"
 
 str(spores30181) #sanity check to make sure data loaded
 
-head(spores1) #sanity check to make sure data loaded
+head(spores30181) #sanity check to make sure data loaded
 
 #combines each specimen to one graph
 all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215, spores30221, spores30222, spores30226, spores30230, spores30238, spores30239, spores30244, spores30249)
@@ -615,3 +615,112 @@ plot (plot)
 
 #ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
 ```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Count number of spores per section
+section_counts <- all_spores %>%
+  group_by(Group) %>%
+  summarise(n_spores = n())
+
+# (Optional) sanity check
+table(all_spores$Group, useNA = "ifany")
+
+# Bar plot
+bar_plot <- ggplot(section_counts, aes(x = Group, y = n_spores, fill = Group)) +
+  geom_col(color = "black", width = 0.7) +
+  scale_fill_manual(
+    values = c(
+      "Roanokensis"="magenta",
+      "Phalloidae"="blue",
+      "Vaginatae"="yellow",
+      "Amanita"="red",
+      "Validae"="green",
+      "Ceasareae"="orange",
+      "Amidella"="purple"
+    )
+  ) +
+  labs(
+    title = "Number of Basidiospore Measurements per Section",
+    x = "Section",
+    y = "Number of Measurements"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+bar_plot
+
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore")
+
+# 1. Load species lookup table
+species_lookup <- read.csv("basidiospore.csv", stringsAsFactors = FALSE)
+
+# 2. Rename specimen_id to Sample so it matches all_spores
+species_lookup <- species_lookup %>%
+  rename(Sample = specimen_id)
+
+# 3. Ensure Sample is character
+species_lookup$Sample <- as.character(species_lookup$Sample)
+
+# 4. Merge species names into the main dataset
+all_spores2 <- all_spores %>%
+  left_join(species_lookup, by = "Sample")
+
+# 5. Clean species names into "A. species" format
+all_spores2$Species_clean <- sub("^Amanita ", "A. ", all_spores2$species)
+
+
+# 6. Count spores per species (combining repeated specimens)
+species_counts <- all_spores2 %>%
+  group_by(Species_clean, Group) %>%
+  summarise(n_spores = n(), .groups = "drop")
+
+# 7. Sort species by section (Group), then alphabetically within section
+species_counts$Species_clean <- factor(
+  species_counts$Species_clean,
+  levels = species_counts %>%
+    arrange(Group, Species_clean) %>%
+    pull(Species_clean)
+)
+
+# 8. Bar plot by species, color-coded by section
+species_plot <- ggplot(species_counts,
+                       aes(x = Species_clean,
+                           y = n_spores,
+                           fill = Group)) +
+  geom_col(color = "black") +
+  scale_fill_manual(
+    values = c(
+      "Roanokensis"="magenta",
+      "Phalloidae"="blue",
+      "Vaginatae"="yellow",
+      "Amanita"="red",
+      "Validae"="green",
+      "Ceasareae"="orange",
+      "Amidella"="purple"
+    )
+  ) +
+  labs(
+    title = "Total Basidiospore Measurements per Species",
+    x = "Species",
+    y = "Number of Measurements"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+species_plot
+
+```
+
