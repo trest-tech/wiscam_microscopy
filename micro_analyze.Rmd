@@ -723,4 +723,5 @@ species_plot <- ggplot(species_counts,
 species_plot
 
 ```
+#add a ceasarea, a phalloidae, 2 Amidella, sp 61, solaniolens, rubescense, brunesense, fulva
 
