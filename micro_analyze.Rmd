@@ -431,6 +431,7 @@ plot (plot)
 
 ```{r}
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore/basidiospore_by_specimen")
 getwd() #use to see what your current working directory is
 #rename each csv to spore30181, etc for easier coding
 spores30181 <- read.csv("30181_basidiospore.csv")
@@ -614,6 +615,7 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
 plot (plot)
 
 #ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
+ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300)
 ```
 
 ```{r}
@@ -724,4 +726,501 @@ species_plot
 
 ```
 #add a ceasarea, a phalloidae, 2 Amidella, sp 61, solaniolens, rubescense, brunesense, fulva
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# ---------------------------------------------------------
+# 1. Create a species lookup table (specimen → species)
+# ---------------------------------------------------------
+species_map <- c(
+  "30181"="Amanita bisporigera",
+  "30182"="Amanita suballiacea",
+  "30183"="Amanita oberwinkleriana",
+  "30184"="Amanita suballiacea",
+  "30185"="Amanita sp aurorae",
+  "30186"="Amanita fusca",
+  "30187"="Amanita suballiacea",
+  "30188"="Amanita sp longicuneus",
+  "30189"="Amanita rhacopus",
+  "30190"="Amanita frostiana",
+  "30191"="Amanita frostiana",
+  "30192"="Amanita muscaria var guessowii",
+  "30193"="Amanita albiceps",
+  "30194"="Amanita sp 1",
+  "30195"="Amanita amerivirosa",
+  "30196"="Amanita muscaria var guessowii",
+  "30197"="Amanita muscaria var guessowii",
+  "30198"="Amanita mortenii",
+  "30199"="Amanita bisporigera",
+  "30201"="Amanita flavoconia",
+  "30202"="Amanita porphyria",
+  "30203"="Amanita amerivirosa",
+  "30204"="Amanita amerivirosa",
+  "30205"="Amanita flavoconia",
+  "30206"="Amanita flavoconia",
+  "30207"="Amanita porphyria",
+  "30208"="Amanita lavendula",
+  "30209"="Amanita amerivirosa",
+  "30212"="Amanita firma",
+  "30213"="Amanita sp cornelihybrida",
+  "30214"="Amanita sp cornelihybrida",
+  "30215"="Amanita sp. 61",
+  "30221"="Amanita velatipes",
+  "30222"="Amanita multisquamosa",
+  "30226"="Amanita sp NY06",
+  "30230"="Amanita rubescens var alba",
+  "30238"="Amanita flavorubens",
+  "30239"="Amanita virginiana",
+  "30244"="Amanita coryli",
+  "30249"="Amanita sp NY06"
+)
+
+# ---------------------------------------------------------
+# 2. Add species + section to the spore dataset
+# ---------------------------------------------------------
+all_spores2 <- all_spores %>%
+  mutate(
+    species = species_map[Sample],
+    sectionid = group_map[Sample],
+    species_short = str_replace(species, "^Amanita", "A.")
+  )
+
+# ---------------------------------------------------------
+# 3. Sort species by section, then species name
+# ---------------------------------------------------------
+all_spores2 <- all_spores2 %>%
+  arrange(sectionid, species_short) %>%
+  mutate(species_short = factor(species_short, levels = unique(species_short)))
+
+# ---------------------------------------------------------
+# 4. Section color palette
+# ---------------------------------------------------------
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloidae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Ceasareae"="orange",
+  "Amidella"="purple"
+)
+
+# ---------------------------------------------------------
+# 5. Box-and-whisker plot (species-level, NO MEAN POINT)
+# ---------------------------------------------------------
+ggplot(all_spores2, aes(x = species_short, y = Length, fill = sectionid)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7, lwd = 0.4) +   # Q1–median–Q3 + whiskers
+  scale_fill_manual(values = section_colors) +
+  labs(
+    title = "Basidiospore Length Distribution by Species",
+    x = "Species",
+    y = "Basidiospore Length (µm)",
+    fill = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# ---------------------------------------------------------
+# 0. Remove outlier row from specimen 30183
+# ---------------------------------------------------------
+spores30183 <- spores30183[-14, ]   # remove row 14
+
+# ---------------------------------------------------------
+# 1. Rebuild all_spores with corrected 30183
+# ---------------------------------------------------------
+all_spores <- rbind(
+  spores30181, spores30182, spores30183, spores30184, spores30185,
+  spores30186, spores30187, spores30188, spores30189, spores30190,
+  spores30191, spores30192, spores30193, spores30194, spores30195,
+  spores30196, spores30197, spores30198, spores30199, spores30201,
+  spores30202, spores30203, spores30204, spores30205, spores30206,
+  spores30207, spores30208, spores30209, spores30212, spores30213,
+  spores30214, spores30215, spores30221, spores30222, spores30226,
+  spores30230, spores30238, spores30239, spores30244, spores30249
+)
+
+# ---------------------------------------------------------
+# 2. Species lookup table (specimen → species)
+# ---------------------------------------------------------
+species_map <- c(
+  "30181"="Amanita bisporigera",
+  "30182"="Amanita suballiacea",
+  "30183"="Amanita oberwinkleriana",
+  "30184"="Amanita suballiacea",
+  "30185"="Amanita sp aurorae",
+  "30186"="Amanita fusca",
+  "30187"="Amanita suballiacea",
+  "30188"="Amanita sp longicuneus",
+  "30189"="Amanita rhacopus",
+  "30190"="Amanita frostiana",
+  "30191"="Amanita frostiana",
+  "30192"="Amanita muscaria var guessowii",
+  "30193"="Amanita albiceps",
+  "30194"="Amanita sp 1",
+  "30195"="Amanita amerivirosa",
+  "30196"="Amanita muscaria var guessowii",
+  "30197"="Amanita muscaria var guessowii",
+  "30198"="Amanita mortenii",
+  "30199"="Amanita bisporigera",
+  "30201"="Amanita flavoconia",
+  "30202"="Amanita porphyria",
+  "30203"="Amanita amerivirosa",
+  "30204"="Amanita amerivirosa",
+  "30205"="Amanita flavoconia",
+  "30206"="Amanita flavoconia",
+  "30207"="Amanita porphyria",
+  "30208"="Amanita lavendula",
+  "30209"="Amanita amerivirosa",
+  "30212"="Amanita firma",
+  "30213"="Amanita sp cornelihybrida",
+  "30214"="Amanita sp cornelihybrida",
+  "30215"="Amanita sp. 61",
+  "30221"="Amanita velatipes",
+  "30222"="Amanita multisquamosa",
+  "30226"="Amanita sp NY06",
+  "30230"="Amanita rubescens var alba",
+  "30238"="Amanita flavorubens",
+  "30239"="Amanita virginiana",
+  "30244"="Amanita coryli",
+  "30249"="Amanita sp NY06"
+)
+
+# ---------------------------------------------------------
+# 3. Add species + section to the spore dataset
+# ---------------------------------------------------------
+all_spores2 <- all_spores %>%
+  mutate(
+    species = species_map[Sample],
+    sectionid = group_map[Sample],
+    species_short = str_replace(species, "^Amanita", "A.")
+  )
+
+# ---------------------------------------------------------
+# 4. Sort species by section, then species name
+# ---------------------------------------------------------
+all_spores2 <- all_spores2 %>%
+  arrange(sectionid, species_short) %>%
+  mutate(species_short = factor(species_short, levels = unique(species_short)))
+
+# ---------------------------------------------------------
+# 5. Section color palette
+# ---------------------------------------------------------
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloidae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Ceasareae"="orange",
+  "Amidella"="purple"
+)
+
+# ---------------------------------------------------------
+# 6. Box-and-whisker plot (species-level, NO MEAN POINT)
+# ---------------------------------------------------------
+ggplot(all_spores2, aes(x = species_short, y = Length, fill = sectionid)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7, lwd = 0.3) +   # thinner lines
+  scale_fill_manual(values = section_colors) +
+  labs(
+    title = "Basidiospore Length Distribution by Species",
+    x = "Species",
+    y = "Basidiospore Length (µm)",
+    fill = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# ---------------------------------------------------------
+# 0. Remove outlier row from specimen 30183
+# ---------------------------------------------------------
+spores30183 <- spores30183[-14, ]   # remove row 14
+
+# ---------------------------------------------------------
+# 1. Rebuild all_spores with corrected 30183
+# ---------------------------------------------------------
+all_spores <- rbind(
+  spores30181, spores30182, spores30183, spores30184, spores30185,
+  spores30186, spores30187, spores30188, spores30189, spores30190,
+  spores30191, spores30192, spores30193, spores30194, spores30195,
+  spores30196, spores30197, spores30198, spores30199, spores30201,
+  spores30202, spores30203, spores30204, spores30205, spores30206,
+  spores30207, spores30208, spores30209, spores30212, spores30213,
+  spores30214, spores30215, spores30221, spores30222, spores30226,
+  spores30230, spores30238, spores30239, spores30244, spores30249
+)
+
+# ---------------------------------------------------------
+# 2. Species lookup table (specimen → species)
+# ---------------------------------------------------------
+species_map <- c(
+  "30181"="Amanita bisporigera",
+  "30182"="Amanita suballiacea",
+  "30183"="Amanita oberwinkleriana",
+  "30184"="Amanita suballiacea",
+  "30185"="Amanita sp aurorae",
+  "30186"="Amanita fusca",
+  "30187"="Amanita suballiacea",
+  "30188"="Amanita sp longicuneus",
+  "30189"="Amanita rhacopus",
+  "30190"="Amanita frostiana",
+  "30191"="Amanita frostiana",
+  "30192"="Amanita muscaria var guessowii",
+  "30193"="Amanita albiceps",
+  "30194"="Amanita sp 1",
+  "30195"="Amanita amerivirosa",
+  "30196"="Amanita muscaria var guessowii",
+  "30197"="Amanita muscaria var guessowii",
+  "30198"="Amanita mortenii",
+  "30199"="Amanita bisporigera",
+  "30201"="Amanita flavoconia",
+  "30202"="Amanita porphyria",
+  "30203"="Amanita amerivirosa",
+  "30204"="Amanita amerivirosa",
+  "30205"="Amanita flavoconia",
+  "30206"="Amanita flavoconia",
+  "30207"="Amanita porphyria",
+  "30208"="Amanita lavendula",
+  "30209"="Amanita amerivirosa",
+  "30212"="Amanita firma",
+  "30213"="Amanita sp cornelihybrida",
+  "30214"="Amanita sp cornelihybrida",
+  "30215"="Amanita sp. 61",
+  "30221"="Amanita velatipes",
+  "30222"="Amanita multisquamosa",
+  "30226"="Amanita sp NY06",
+  "30230"="Amanita rubescens var alba",
+  "30238"="Amanita flavorubens",
+  "30239"="Amanita virginiana",
+  "30244"="Amanita coryli",
+  "30249"="Amanita sp NY06"
+)
+
+# ---------------------------------------------------------
+# 3. Add species + section to the spore dataset
+# ---------------------------------------------------------
+all_spores2 <- all_spores %>%
+  mutate(
+    species = species_map[Sample],
+    sectionid = group_map[Sample],
+    species_short = str_replace(species, "^Amanita", "A.")
+  )
+
+# ---------------------------------------------------------
+# 4. Sort species by section, then species name
+# ---------------------------------------------------------
+all_spores2 <- all_spores2 %>%
+  arrange(sectionid, species_short) %>%
+  mutate(species_short = factor(species_short, levels = unique(species_short)))
+
+# ---------------------------------------------------------
+# 5. Section color palette
+# ---------------------------------------------------------
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloidae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Ceasareae"="orange",
+  "Amidella"="purple"
+)
+
+# ---------------------------------------------------------
+# 6. Box-and-whisker plot (WIDTH, species-level, NO MEAN POINT)
+# ---------------------------------------------------------
+ggplot(all_spores2, aes(x = species_short, y = Width, fill = sectionid)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7, lwd = 0.3) +   # thinner lines
+  scale_fill_manual(values = section_colors) +
+  labs(
+    title = "Basidiospore Width Distribution by Species",
+    x = "Species",
+    y = "Basidiospore Width (µm)",
+    fill = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+# ---------------------------------------------------------
+# 0. Remove outlier row from specimen 30183
+# ---------------------------------------------------------
+spores30183 <- spores30183[-14, ]   # remove row 14
+
+# ---------------------------------------------------------
+# 1. Rebuild all_spores with corrected 30183
+# ---------------------------------------------------------
+all_spores <- rbind(
+  spores30181, spores30182, spores30183, spores30184, spores30185,
+  spores30186, spores30187, spores30188, spores30189, spores30190,
+  spores30191, spores30192, spores30193, spores30194, spores30195,
+  spores30196, spores30197, spores30198, spores30199, spores30201,
+  spores30202, spores30203, spores30204, spores30205, spores30206,
+  spores30207, spores30208, spores30209, spores30212, spores30213,
+  spores30214, spores30215, spores30221, spores30222, spores30226,
+  spores30230, spores30238, spores30239, spores30244, spores30249
+)
+
+# ---------------------------------------------------------
+# 2. Species lookup table (specimen → species)
+# ---------------------------------------------------------
+species_map <- c(
+  "30181"="Amanita bisporigera",
+  "30182"="Amanita suballiacea",
+  "30183"="Amanita oberwinkleriana",
+  "30184"="Amanita suballiacea",
+  "30185"="Amanita sp aurorae",
+  "30186"="Amanita fusca",
+  "30187"="Amanita suballiacea",
+  "30188"="Amanita sp longicuneus",
+  "30189"="Amanita rhacopus",
+  "30190"="Amanita frostiana",
+  "30191"="Amanita frostiana",
+  "30192"="Amanita muscaria var guessowii",
+  "30193"="Amanita albiceps",
+  "30194"="Amanita sp 1",
+  "30195"="Amanita amerivirosa",
+  "30196"="Amanita muscaria var guessowii",
+  "30197"="Amanita muscaria var guessowii",
+  "30198"="Amanita mortenii",
+  "30199"="Amanita bisporigera",
+  "30201"="Amanita flavoconia",
+  "30202"="Amanita porphyria",
+  "30203"="Amanita amerivirosa",
+  "30204"="Amanita amerivirosa",
+  "30205"="Amanita flavoconia",
+  "30206"="Amanita flavoconia",
+  "30207"="Amanita porphyria",
+  "30208"="Amanita lavendula",
+  "30209"="Amanita amerivirosa",
+  "30212"="Amanita firma",
+  "30213"="Amanita sp cornelihybrida",
+  "30214"="Amanita sp cornelihybrida",
+  "30215"="Amanita sp. 61",
+  "30221"="Amanita velatipes",
+  "30222"="Amanita multisquamosa",
+  "30226"="Amanita sp NY06",
+  "30230"="Amanita rubescens var alba",
+  "30238"="Amanita flavorubens",
+  "30239"="Amanita virginiana",
+  "30244"="Amanita coryli",
+  "30249"="Amanita sp NY06"
+)
+
+# ---------------------------------------------------------
+# 3. Add species + section + rename Q column
+# ---------------------------------------------------------
+all_spores2 <- all_spores %>%
+  mutate(
+    species = species_map[Sample],
+    sectionid = group_map[Sample],
+    species_short = str_replace(species, "^Amanita", "A.")
+  ) %>%
+  rename(Q = Q..length.width.)   # <-- rename your Q column
+
+# ---------------------------------------------------------
+# 4. Sort species by section, then species name
+# ---------------------------------------------------------
+all_spores2 <- all_spores2 %>%
+  arrange(sectionid, species_short) %>%
+  mutate(species_short = factor(species_short, levels = unique(species_short)))
+
+# ---------------------------------------------------------
+# 5. Section color palette
+# ---------------------------------------------------------
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloidae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Ceasareae"="orange",
+  "Amidella"="purple"
+)
+
+# ---------------------------------------------------------
+# 6. Q box-and-whisker plot (NO MEAN POINT)
+# ---------------------------------------------------------
+ggplot(all_spores2, aes(x = species_short, y = Q, fill = sectionid)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7, lwd = 0.3) +
+  scale_fill_manual(values = section_colors) +
+  labs(
+    title = "Basidiospore Q (Length ÷ Width) by Species",
+    x = "Species",
+    y = "Q Ratio",
+    fill = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+```
+
+```{r}
+ggplot(all_spores2, aes(x = species_short, y = Q, color = sectionid)) +
+  geom_jitter(width = 0.2, alpha = 0.6, size = 1.8) +   # jittered points
+  scale_color_manual(values = section_colors) +
+  labs(
+    title = "Individual Basidiospore Q Values by Species",
+    x = "Species",
+    y = "Q Ratio (Length ÷ Width)",
+    color = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+```
+
+```{r}
+ggplot(all_spores2, aes(x = Width, y = Length, color = sectionid)) +
+  geom_jitter(width = 0.15, height = 0.15, alpha = 0.6, size = 1.8) +  # jittered points
+  geom_abline(intercept = 0, slope = 1,
+              color = "black", linetype = "dashed", linewidth = 0.7) + # Q = 1 line
+  scale_color_manual(values = section_colors) +
+  coord_cartesian(xlim = c(0, max(all_spores2$Width, na.rm = TRUE)),
+                  ylim = c(0, max(all_spores2$Length, na.rm = TRUE))) +
+  labs(
+    title = "Basidiospore Length vs Width (with Q = 1 Reference Line)",
+    x = "Width (µm)",
+    y = "Length (µm)",
+    color = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right"
+  )
+
+
+```
 
