@@ -33,7 +33,7 @@ pip install openpyxl
 Now we have our needed packages we can execute the script and see if it does what we want
 
 ```zsh
-cd data
+cd data/normalized
 cp training_book.xlsx normalized #copies training data into the normalized folder where the basidiospore.xlsx is found
 ```
 
