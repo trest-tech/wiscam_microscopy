@@ -1,435 +1,8 @@
----
 title: "micro_analyze"
 output: html_document
 date: "2026-02-26"
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-#1. creating figures for basidiospore data to compare sizes
-
---text take .csv files with spore data for a single specimen and make scatter plots with data
-
-Set working directory, make sure it is the right directory, load 30181 data as spores
-
 ```{r}
-setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
-getwd() #use to see what your current working directory is
-#remane each csv to spore30181, etc for easier coding
-spores30181 <- read.csv("30181_basidiospore.csv")
-spores30182 <- read.csv("30182_basidiospore.csv")
-spores30183 <- read.csv("30183_basidiospore.csv")
-spores30184 <- read.csv("30184_basidiospore.csv")
-spores30185 <- read.csv("30185_basidiospore.csv")
-spores30186 <- read.csv("30186_basidiospore.csv")
-spores30187 <- read.csv("30187_basidiospore.csv")
-spores30188 <- read.csv("30188_basidiospore.csv")
-spores30189 <- read.csv("30189_basidiospore.csv")
-spores30190 <- read.csv("30190_basidiospore.csv")
-spores30191 <- read.csv("30191_basidiospore.csv")
-spores30192 <- read.csv("30192_basidiospore.csv")
-spores30193 <- read.csv("30193_basidiospore.csv")
-spores30194 <- read.csv("30194_basidiospore.csv")
-spores30195 <- read.csv("30195_basidiospore.csv")
-spores30196 <- read.csv("30196_basidiospore.csv")
-spores30197 <- read.csv("30197_basidiospore.csv")
-spores30198 <- read.csv("30198_basidiospore.csv")
-spores30199 <- read.csv("30199_basidiospore.csv")
 
-# $Sample to add new column with speices ID to each basidiospore measurement
-spores30181$Sample <- "30181"
-spores30182$Sample <- "30182"
-spores30183$Sample <- "30183"
-spores30184$Sample <- "30184"
-spores30185$Sample <- "30185"
-spores30186$Sample <- "30186"
-spores30187$Sample <- "30187"
-spores30188$Sample <- "30188"
-spores30189$Sample <- "30189"
-spores30190$Sample <- "30190"
-spores30191$Sample <- "30191"
-spores30192$Sample <- "30192"
-spores30193$Sample <- "30193"
-spores30194$Sample <- "30194"
-spores30195$Sample <- "30195"
-spores30196$Sample <- "30196"
-spores30197$Sample <- "30197"
-spores30198$Sample <- "30198"
-spores30199$Sample <- "30199"
-
-str(spores30181)
-str(spores30182)
-str(spores30183)
-str(spores30184)
-str(spores30185)
-str(spores30186)
-str(spores30187)
-str(spores30188)
-str(spores30189)
-str(spores30190) #sanity check to make sure data loaded
-str(spores30191)
-str(spores30192)
-str(spores30193)
-str(spores30194)
-str(spores30195)
-str(spores30196)
-str(spores30197)
-str(spores30198)
-str(spores30199)
-
-head(spores1) #sanity check to make sure data loaded
-
-all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199)
-library(ggplot2)
-
-plot <- ggplot(all_spores, aes(x = Width, y = Length, color = Sample)) +
-  geom_point(size = 1, alpha = 0.5) +
-  scale_color_manual(values = c("30181" = "blue",
-                                "30182" = "blue",
-                                "30183" = "pink",
-                                "30184"= "blue",
-                                "30185"= "yellow",
-                                "30186"= "yellow",
-                                "30187"= "blue",
-                                "30188"= "yellow",
-                                "30189"= "yellow",
-                                "30190"= "red",
-                                "30191"= "red",
-                                "30192"= "red",
-                                "30193"= "yellow",
-                                "30194"= "yellow",
-                                "30195"= "blue",
-                                "30196"= "red",
-                                "30197"= "red",
-                                "30198"= "yellow",
-                                "30199"= "blue")) +
-  xlim(0, 15) +
-  ylim(0, 15) +
-  theme_minimal() +
-  labs(
-    title = "Basidiospore Measurements",
-    x = "Width (µm)",
-    y = "Length (µm)"
-  )
-
-plot (plot)
-
-#ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
-```
-#make a scatter plot -24
-```{r}
-library(ggplot2)
-ggplot(spores1, aes(x = Length, y = Width)) +
-  geom_point(color = "darkblue", size = 3) +
-   xlim(0, 15) +
-  ylim(0, 13) +
-  labs(
-    title = "Basidiospore Measurements",
-    x = "Length (µm)",
-    y = "Width (µm)"
-  ) +
-  theme_minimal()
-
-```
-
-```{r}
-setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
-getwd() #use to see what your current working directory is
-#remane each csv to spore30181, etc for easier coding
-spores30181 <- read.csv("30181_basidiospore.csv")
-spores30182 <- read.csv("30182_basidiospore.csv")
-spores30183 <- read.csv("30183_basidiospore.csv")
-spores30184 <- read.csv("30184_basidiospore.csv")
-spores30185 <- read.csv("30185_basidiospore.csv")
-spores30186 <- read.csv("30186_basidiospore.csv")
-spores30187 <- read.csv("30187_basidiospore.csv")
-spores30188 <- read.csv("30188_basidiospore.csv")
-spores30189 <- read.csv("30189_basidiospore.csv")
-spores30190 <- read.csv("30190_basidiospore.csv")
-spores30191 <- read.csv("30191_basidiospore.csv")
-spores30192 <- read.csv("30192_basidiospore.csv")
-spores30193 <- read.csv("30193_basidiospore.csv")
-spores30194 <- read.csv("30194_basidiospore.csv")
-spores30195 <- read.csv("30195_basidiospore.csv")
-spores30196 <- read.csv("30196_basidiospore.csv")
-spores30197 <- read.csv("30197_basidiospore.csv")
-spores30198 <- read.csv("30198_basidiospore.csv")
-spores30199 <- read.csv("30199_basidiospore.csv")
-spores30201 <- read.csv("30201_basidiospore.csv")
-spores30202 <- read.csv("30202_basidiospore.csv")
-spores30203 <- read.csv("30203_basidiospore.csv")
-spores30204 <- read.csv("30204_basidiospore.csv")
-spores30205 <- read.csv("30205_basidiospore.csv")
-spores30206 <- read.csv("30206_basidiospore.csv")
-spores30207 <- read.csv("30207_basidiospore.csv")
-spores30208 <- read.csv("30208_basidiospore.csv")
-spores30209 <- read.csv("30209_basidiospore.csv")
-
-# $Sample to add new column with speices ID to each basidiospore measurement
-spores30181$Sample <- "30181"
-spores30182$Sample <- "30182"
-spores30183$Sample <- "30183"
-spores30184$Sample <- "30184"
-spores30185$Sample <- "30185"
-spores30186$Sample <- "30186"
-spores30187$Sample <- "30187"
-spores30188$Sample <- "30188"
-spores30189$Sample <- "30189"
-spores30190$Sample <- "30190"
-spores30191$Sample <- "30191"
-spores30192$Sample <- "30192"
-spores30193$Sample <- "30193"
-spores30194$Sample <- "30194"
-spores30195$Sample <- "30195"
-spores30196$Sample <- "30196"
-spores30197$Sample <- "30197"
-spores30198$Sample <- "30198"
-spores30199$Sample <- "30199"
-spores30201$Sample <- "30201"
-spores30202$Sample <- "30202"
-spores30203$Sample <- "30203"
-spores30204$Sample <- "30204"
-spores30205$Sample <- "30205"
-spores30206$Sample <- "30206"
-spores30207$Sample <- "30207"
-spores30208$Sample <- "30208"
-spores30209$Sample <- "30209"
-
-str(spores30181)
-str(spores30182)
-str(spores30183)
-str(spores30184)
-str(spores30185)
-str(spores30186)
-str(spores30187)
-str(spores30188)
-str(spores30189)
-str(spores30190) #sanity check to make sure data loaded
-str(spores30191)
-str(spores30192)
-str(spores30193)
-str(spores30194)
-str(spores30195)
-str(spores30196)
-str(spores30197)
-str(spores30198)
-str(spores30199)
-str(spores30201)
-str(spores30202)
-str(spores30203)
-str(spores30204)
-str(spores30205)
-str(spores30206)
-str(spores30207)
-str(spores30208)
-str(spores30209)
-
-head(spores1) #sanity check to make sure data loaded
-
-all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209)
-library(ggplot2)
-
-plot <- ggplot(all_spores, aes(x = Width, y = Length, color = Sample)) +
-  geom_point(size = 1, alpha = 0.5) +
-  scale_color_manual(values = c("30181" = "blue",
-                                "30182" = "blue",
-                                "30183" = "pink",
-                                "30184"= "blue",
-                                "30185"= "yellow",
-                                "30186"= "yellow",
-                                "30187"= "blue",
-                                "30188"= "yellow",
-                                "30189"= "yellow",
-                                "30190"= "red",
-                                "30191"= "red",
-                                "30192"= "red",
-                                "30193"= "yellow",
-                                "30194"= "yellow",
-                                "30195"= "blue",
-                                "30196"= "red",
-                                "30197"= "red",
-                                "30198"= "yellow",
-                                "30199"= "blue",
-                                "30201"= "green",
-                                "30202"= "green",
-                                "30203"= "blue",
-                                "30204"= "blue",
-                                "30205"= "green",
-                                "30206"= "green",
-                                "30207"= "green",
-                                "30208"= "green",
-                                "30209"= "blue")) +
-  xlim(5, 15) +
-  ylim(5, 15) +
-  theme_minimal() +
-  labs(
-    title = "Basidiospore Measurements",
-    x = "Width (µm)",
-    y = "Length (µm)"
-  )
-
-plot (plot)
-
-#ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
-```
-
-```{r}
-setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
-getwd() #use to see what your current working directory is
-#remane each csv to spore30181, etc for easier coding
-spores30181 <- read.csv("30181_basidiospore.csv")
-spores30182 <- read.csv("30182_basidiospore.csv")
-spores30183 <- read.csv("30183_basidiospore.csv")
-spores30184 <- read.csv("30184_basidiospore.csv")
-spores30185 <- read.csv("30185_basidiospore.csv")
-spores30186 <- read.csv("30186_basidiospore.csv")
-spores30187 <- read.csv("30187_basidiospore.csv")
-spores30188 <- read.csv("30188_basidiospore.csv")
-spores30189 <- read.csv("30189_basidiospore.csv")
-spores30190 <- read.csv("30190_basidiospore.csv")
-spores30191 <- read.csv("30191_basidiospore.csv")
-spores30192 <- read.csv("30192_basidiospore.csv")
-spores30193 <- read.csv("30193_basidiospore.csv")
-spores30194 <- read.csv("30194_basidiospore.csv")
-spores30195 <- read.csv("30195_basidiospore.csv")
-spores30196 <- read.csv("30196_basidiospore.csv")
-spores30197 <- read.csv("30197_basidiospore.csv")
-spores30198 <- read.csv("30198_basidiospore.csv")
-spores30199 <- read.csv("30199_basidiospore.csv")
-spores30201 <- read.csv("30201_basidiospore.csv")
-spores30202 <- read.csv("30202_basidiospore.csv")
-spores30203 <- read.csv("30203_basidiospore.csv")
-spores30204 <- read.csv("30204_basidiospore.csv")
-spores30205 <- read.csv("30205_basidiospore.csv")
-spores30206 <- read.csv("30206_basidiospore.csv")
-spores30207 <- read.csv("30207_basidiospore.csv")
-spores30208 <- read.csv("30208_basidiospore.csv")
-spores30209 <- read.csv("30209_basidiospore.csv")
-spores30212 <- read.csv("30212_basidiospore.csv")
-spores30213 <- read.csv("30213_basidiospore.csv")
-spores30214 <- read.csv("30214_basidiospore.csv")
-spores30215 <- read.csv("30215_basidiospore.csv")
-
-# $Sample to add new column with speices ID to each basidiospore measurement
-spores30181$Sample <- "30181"
-spores30182$Sample <- "30182"
-spores30183$Sample <- "30183"
-spores30184$Sample <- "30184"
-spores30185$Sample <- "30185"
-spores30186$Sample <- "30186"
-spores30187$Sample <- "30187"
-spores30188$Sample <- "30188"
-spores30189$Sample <- "30189"
-spores30190$Sample <- "30190"
-spores30191$Sample <- "30191"
-spores30192$Sample <- "30192"
-spores30193$Sample <- "30193"
-spores30194$Sample <- "30194"
-spores30195$Sample <- "30195"
-spores30196$Sample <- "30196"
-spores30197$Sample <- "30197"
-spores30198$Sample <- "30198"
-spores30199$Sample <- "30199"
-spores30201$Sample <- "30201"
-spores30202$Sample <- "30202"
-spores30203$Sample <- "30203"
-spores30204$Sample <- "30204"
-spores30205$Sample <- "30205"
-spores30206$Sample <- "30206"
-spores30207$Sample <- "30207"
-spores30208$Sample <- "30208"
-spores30209$Sample <- "30209"
-spores30212$Sample <- "30212"
-spores30213$Sample <- "30213"
-spores30214$Sample <- "30214"
-spores30215$Sample <- "30215"
-
-str(spores30181)
-str(spores30182)
-str(spores30183)
-str(spores30184)
-str(spores30185)
-str(spores30186)
-str(spores30187)
-str(spores30188)
-str(spores30189)
-str(spores30190) #sanity check to make sure data loaded
-str(spores30191)
-str(spores30192)
-str(spores30193)
-str(spores30194)
-str(spores30195)
-str(spores30196)
-str(spores30197)
-str(spores30198)
-str(spores30199)
-str(spores30201)
-str(spores30202)
-str(spores30203)
-str(spores30204)
-str(spores30205)
-str(spores30206)
-str(spores30207)
-str(spores30208)
-str(spores30209)
-str(spores30212)
-
-head(spores1) #sanity check to make sure data loaded
-
-all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215)
-library(ggplot2)
-
-plot <- ggplot(all_spores, aes(x = Width, y = Length, color = Sample)) +
-  geom_jitter(size = 1, alpha = 0.5, width = 0.1, height = 0.1) +
-  scale_color_manual(values = c("30181" = "blue",
-                                "30182" = "blue",
-                                "30183" = "magenta",
-                                "30184"= "blue",
-                                "30185"= "yellow",
-                                "30186"= "yellow",
-                                "30187"= "blue",
-                                "30188"= "yellow",
-                                "30189"= "yellow",
-                                "30190"= "red",
-                                "30191"= "red",
-                                "30192"= "red",
-                                "30193"= "yellow",
-                                "30194"= "yellow",
-                                "30195"= "blue",
-                                "30196"= "red",
-                                "30197"= "red",
-                                "30198"= "yellow",
-                                "30199"= "blue",
-                                "30201"= "green",
-                                "30202"= "green",
-                                "30203"= "blue",
-                                "30204"= "blue",
-                                "30205"= "green",
-                                "30206"= "green",
-                                "30207"= "green",
-                                "30208"= "green",
-                                "30209"= "blue",
-                                "30212"= "purple",
-                                "30213"= "green",
-                                "30214"= "green",
-                                "30215"= "yellow")) +
-  xlim(5, 15) +
-  ylim(5, 15) +
-  theme_minimal() +
-  labs(
-    title = "Basidiospore Measurements",
-    x = "Width (µm)",
-    y = "Length (µm)"
-  )
-
-plot (plot)
-
-#ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
-```
-
-```{r}
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore/basidiospore_by_specimen")
 getwd() #use to see what your current working directory is
@@ -474,6 +47,13 @@ spores30238 <- read.csv("30238_basidiospore.csv")
 spores30239 <- read.csv("30239_basidiospore.csv")
 spores30244 <- read.csv("30244_basidiospore.csv")
 spores30249 <- read.csv("30249_basidiospore.csv")
+spores30300 <- read.csv("30300_basidiospore.csv")
+spores30295 <- read.csv("30295_basidiospore.csv")
+spores30276 <- read.csv("30276_basidiospore.csv")
+spores30274 <- read.csv("30274_basidiospore.csv")
+spores30248 <- read.csv("30248_basidiospore.csv")
+spores30245 <- read.csv("30245_basidiospore.csv")
+
 
 # $Sample to add new column with speices ID to each basidiospore measurement
 spores30181$Sample <- "30181"
@@ -516,14 +96,19 @@ spores30238$Sample <- "30238"
 spores30239$Sample <- "30239"
 spores30244$Sample <- "30244"
 spores30249$Sample <- "30249"
-
+spores30300$Sample <- "30300"
+spores30295$Sample <- "30295"
+spores30276$Sample <- "30276"
+spores30274$Sample <- "30274"
+spores30248$Sample <- "30248"
+spores30245$Sample <- "30245"
 
 str(spores30181) #sanity check to make sure data loaded
 
 head(spores30181) #sanity check to make sure data loaded
 
 #combines each specimen to one graph
-all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215, spores30221, spores30222, spores30226, spores30230, spores30238, spores30239, spores30244, spores30249)
+all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215, spores30221, spores30222, spores30226, spores30230, spores30238, spores30239, spores30244, spores30249, spores30300, spores30295, spores30276, spores30274, spores30248, spores30245)
 library(ggplot2)
 
 #groups each specimen by section
@@ -541,53 +126,14 @@ group_map <- c(
   "30214"="Validae", "30215"="Vaginatae",
   "30221"="Amanita", "30222"="Amanita", "30226"="Amanita",
   "30230"="Validae", "30238"="Validae", "30239"="Ceasareae",
-  "30244"="Vaginatae", "30249"="Amanita"
+  "30244"="Vaginatae", "30249"="Amanita", "30300"="Amidella", "30295"="Ceasareae", "30276"="Validae", "30274"="Amidella", "30248"="Validae", "30245"="Vaginatae"
 )
 all_spores$Group <- group_map[all_spores$Sample]
 
 
 plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
-  geom_jitter(shape = 21, size = 2, alpha = 0.7, width = 0.1, height = 0.1) +
-  scale_color_manual(values = c("30181" = "blue",
-                                "30182" = "blue",
-                                "30183" = "magenta",
-                                "30184"= "blue",
-                                "30185"= "yellow",
-                                "30186"= "yellow",
-                                "30187"= "blue",
-                                "30188"= "yellow",
-                                "30189"= "yellow",
-                                "30190"= "red",
-                                "30191"= "red",
-                                "30192"= "red",
-                                "30193"= "yellow",
-                                "30194"= "yellow",
-                                "30195"= "blue",
-                                "30196"= "red",
-                                "30197"= "red",
-                                "30198"= "yellow",
-                                "30199"= "blue",
-                                "30201"= "green",
-                                "30202"= "green",
-                                "30203"= "blue",
-                                "30204"= "blue",
-                                "30205"= "green",
-                                "30206"= "green",
-                                "30207"= "green",
-                                "30208"= "green",
-                                "30209"= "blue",
-                                "30212"= "purple",
-                                "30213"= "green",
-                                "30214"= "green",
-                                "30215"= "yellow",
-                                "30221"= "red",
-                                "30222"= "red",
-                                "30226" = "red",
-                                "30230" = "green",
-                                "30238" = "green",
-                                "30239" = "orange",
-                                "30244" = "yellow",
-                                "30249" = "red")) +
+  geom_jitter(shape = 21, size = 2, alpha = 0.7, width = 0.25, height = 0.25) +
+
   #formating
   scale_fill_manual(
     name = "Section",
@@ -615,7 +161,7 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
 plot (plot)
 
 #ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
-ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300)
+
 ```
 
 ```{r}
@@ -775,7 +321,13 @@ species_map <- c(
   "30238"="Amanita flavorubens",
   "30239"="Amanita virginiana",
   "30244"="Amanita coryli",
-  "30249"="Amanita sp NY06"
+  "30249"="Amanita sp NY06",
+  "30300"="Amanita firma", 
+  "30295"="Amanita banningiana", 
+  "30276"="Amanita sp 2", 
+  "30274"="Amanita sp 3", 
+  "30248"="Amanita brunnescens", 
+  "30245"="Amanita fulva"
 )
 
 # ---------------------------------------------------------
@@ -831,6 +383,7 @@ ggplot(all_spores2, aes(x = species_short, y = Length, fill = sectionid)) +
 library(dplyr)
 library(ggplot2)
 library(stringr)
+#ignore this one for now, use above
 
 # ---------------------------------------------------------
 # 0. Remove outlier row from specimen 30183
@@ -848,7 +401,7 @@ all_spores <- rbind(
   spores30202, spores30203, spores30204, spores30205, spores30206,
   spores30207, spores30208, spores30209, spores30212, spores30213,
   spores30214, spores30215, spores30221, spores30222, spores30226,
-  spores30230, spores30238, spores30239, spores30244, spores30249
+  spores30230, spores30238, spores30239, spores30244, spores30249, 
 )
 
 # ---------------------------------------------------------
@@ -894,7 +447,13 @@ species_map <- c(
   "30238"="Amanita flavorubens",
   "30239"="Amanita virginiana",
   "30244"="Amanita coryli",
-  "30249"="Amanita sp NY06"
+  "30249"="Amanita sp NY06",
+  "30300"="Amanita firma", 
+  "30295"="Amanita banningiana", 
+  "30276"="Amanita sp 2", 
+  "30274"="Amanita sp 3", 
+  "30248"="Amanita brunnescens", 
+  "30245"="Amanita fulva"
 )
 
 # ---------------------------------------------------------
@@ -1221,6 +780,39 @@ ggplot(all_spores2, aes(x = Width, y = Length, color = sectionid)) +
     legend.position = "right"
   )
 
+
+```
+
+```{r}
+# Ensure Q exists
+all_spores$Q <- all_spores$Length / all_spores$Width
+
+# Convert Group to factor
+all_spores$Group <- as.factor(all_spores$Group)
+
+# ---- 1. Check normality assumption (optional but useful) ----
+library(ggplot2)
+
+ggplot(all_spores, aes(x = Group, y = Q, fill = Group)) +
+  geom_boxplot(alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Q Value Distribution by Section")
+
+# ---- 2. ANOVA test ----
+anova_model <- aov(Q ~ Group, data = all_spores)
+summary(anova_model)   # <-- This gives the p-value for section differences
+
+# ---- 3. Tukey post-hoc test ----
+tukey_results <- TukeyHSD(anova_model)
+tukey_results
+
+# ---- 4. If ANOVA assumptions fail, use Kruskal-Wallis ----
+kruskal.test(Q ~ Group, data = all_spores)
+
+# ---- 5. Dunn post-hoc test for non-parametric ----
+install.packages("FSA")
+library(FSA)
+dunnTest(Q ~ Group, data = all_spores, method = "bh")
 
 ```
 
