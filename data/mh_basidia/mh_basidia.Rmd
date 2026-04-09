@@ -24,7 +24,7 @@ library(tidyverse)
 
 # === 1) Load your CSV ========================================================
 # Replace the path/filename as needed
-df0 <- readr::read_csv("basidia.csv", show_col_types = FALSE)
+df0 <- readr::read_csv("basidia_filled_mh.csv", show_col_types = FALSE)
 
 # If your CSV uses different column names, standardize them here
 #   - section column: sectionid (or Section, etc.)
@@ -187,7 +187,7 @@ library(ggplot2)
 library(stringr)
 
 # Start with your dataset
-basidia <- read_csv("basidia_filled_rt.csv")
+basidia <- read_csv("basidia_filled_mh.csv")
 
 # Filter to Vaginatae with complete basidia length data
 vag <- basidia %>%
@@ -230,7 +230,7 @@ library(ggplot2)
 library(stringr)
 library(readr)
 
-basidia <- read_csv("basidia_filled_rt.csv")
+basidia <- read_csv("basidia_filled_mh.csv")
 
 # Filter to specimens with complete basidia length data
 all_clean <- basidia %>%
@@ -285,7 +285,7 @@ library(ggplot2)
 library(stringr)
 library(readr)
 
-basidia <- read_csv("basidia_filled_rt.csv")
+basidia <- read_csv("basidia_filled_mh.csv")
 
 # Filter to specimens with complete basidia length data
 all_clean <- basidia %>%
@@ -340,7 +340,7 @@ library(dplyr)
 library(ggplot2)
 library(readr)
 
-basidia <- read_csv("basidia_filled_rt.csv")
+basidia <- read_csv("basidia_filled_mh.csv")
 
 # Filter to rows with complete basidia length data
 clean <- basidia %>%
@@ -399,7 +399,7 @@ install.packages("patchwork")
 library(patchwork)   # for combining plots
 
 # Read data
-basidia <- read_csv("basidia_filled_rt.csv")
+basidia <- read_csv("basidia_filled_mh.csv")
 
 # Filter to specimens with complete basidia length & width
 clean <- basidia %>%
@@ -478,7 +478,7 @@ library(stringr)
 library(readr)
 
 # Read data
-basidia <- read_csv("basidia_filled_rt.csv")
+basidia <- read_csv("basidia_filled_mh.csv")
 
 # Filter to specimens with basidia_count
 clean <- basidia %>%
@@ -523,4 +523,228 @@ ggplot(clean, aes(x = specimen_id, y = basidia_count, fill = sectionid)) +
   )
 
 ```
+Visualizing the sterigma count data
+
+This first code chunk outputs a proportion of sterigma count per basidia which is cool but misleading for Caesareae
+```{r}
+## ============================================================
+## Sterigma number variation across Amanita sections
+## Reproducible visualization script
+## This script visualizes proportion of sterigma count in each section which is interesting but is a bit inflated for sections like Caesareae where there isn't actually that many basidia that were counted
+## ============================================================
+
+## ---- setup ----
+library(tidyverse)
+
+## Set path to your CSV (edit as needed)
+data_path <- "basidia_filled_mh.csv"
+
+## ---- read data ----
+basidia <- read_csv(data_path, show_col_types = FALSE)
+
+## ---- select & clean sterigma data ----
+## Keep only rows where basidia were actually counted
+ster_cols <- c("4s/basidia", "3s/basidia", "2s/basidia", "s/basidia")
+
+basidia_clean <- basidia %>%
+  filter(if_any(all_of(ster_cols), ~ !is.na(.)))
+
+## ---- pivot sterigma counts to long format ----
+ster_long <- basidia_clean %>%
+  select(specimen_id, species, sectionid, basidia_count, all_of(ster_cols)) %>%
+  pivot_longer(
+    cols = all_of(ster_cols),
+    names_to = "sterigma_class",
+    values_to = "count"
+  ) %>%
+  filter(!is.na(count), count > 0) %>%
+  mutate(
+    sterigmata = case_when(
+      sterigma_class == "4s/basidia" ~ 4,
+      sterigma_class == "3s/basidia" ~ 3,
+      sterigma_class == "2s/basidia" ~ 2,
+      sterigma_class == "s/basidia"  ~ 1
+    )
+  )
+
+## ---- expand to per-basidium observations ----
+## This allows true distributions instead of summarized counts
+ster_expanded <- ster_long %>%
+  uncount(weights = count)
+
+## ============================================================
+## FIGURE 1: Distribution of sterigma numbers by section
+## ============================================================
+
+ggplot(ster_expanded, aes(x = sectionid, y = sterigmata)) +
+  geom_violin(
+    fill = "grey85",
+    color = "grey30",
+    trim = FALSE
+  ) +
+  geom_jitter(
+    width = 0.15,
+    size = 0.5,
+    alpha = 0.3
+  ) +
+  stat_summary(
+    fun = median,
+    geom = "point",
+    size = 2,
+    color = "black"
+  ) +
+  labs(
+    x = "Amanita section",
+    y = "Number of sterigmata per basidium",
+    title = "Sterigma number variation across Amanita sections",
+    subtitle = "Each point represents a single basidium"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+## ============================================================
+## FIGURE 2: Proportional sterigma composition by section
+## ============================================================
+
+ster_props <- ster_long %>%
+  group_by(sectionid, sterigmata) %>%
+  summarise(total = sum(count), .groups = "drop") %>%
+  group_by(sectionid) %>%
+  mutate(prop = total / sum(total))
+
+ggplot(ster_props, aes(x = sectionid, y = prop, fill = factor(sterigmata))) +
+  geom_col(color = "black") +
+  scale_fill_brewer(
+    palette = "Set2",
+    name = "Sterigmata\nper basidium"
+  ) +
+  labs(
+    x = "Amanita section",
+    y = "Proportion of basidia",
+    title = "Section-level sterigma composition in Amanita"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+## ============================================================
+## FIGURE 3: Sterigma diversity (developmental lability)
+## ============================================================
+
+ster_diversity <- ster_props %>%
+  group_by(sectionid) %>%
+  summarise(
+    shannon_diversity = -sum(prop * log(prop))
+  )
+
+ggplot(ster_diversity, aes(x = sectionid, y = shannon_diversity)) +
+  geom_col(fill = "grey70", color = "black") +
+  labs(
+    x = "Amanita section",
+    y = "Sterigma diversity (Shannon index)",
+    title = "Developmental diversity of sterigma number by section"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+## ============================================================
+## END SCRIPT
+## ============================================================
+```
+
+Making a section newick tree to use in visualizations
+```{r}
+library(ape)
+library(nlme)
+
+sectree <- read.tree('sec_tre.nwk')
+plot(sectree)
+```
+
+Total basidia counted graph:
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(ggtree)
+library(patchwork)
+library(tidyr)
+
+basidia <- read_csv("basidia_filled_mh.csv", show_col_types = FALSE)
+
+#Identify sterigma count columns
+ster_cols <- c("4s/basidia", "3s/basidia", "2s/basidia", "s/basidia")
+
+#Calculate total basidia observed for each specimen
+basidia_totals <- basidia %>%
+  mutate(
+    total_basidia = rowSums(across(all_of(ster_cols)), na.rm = TRUE)
+  ) %>%
+  filter(total_basidia > 0)
+
+#Sum total basidia observed per section
+section_totals <- basidia_totals %>%
+  group_by(sectionid) %>%
+  summarise(
+    total_basidia = sum(total_basidia),
+    n_specimens = n(),
+    .groups = "drop"
+  )
+
+#Add all sections
+tree_sections <- sectree$tip.label
+section_totals_full <- section_totals %>%
+  complete(
+    sectionid = tree_sections,
+    fill = list(total_basidia = 0)
+  )
+
+#Oragnize sections phylogenetically
+section_totals_full <- section_totals_full %>%
+  mutate(sectionid = factor(sectionid, levels = sectree$tip.label))
+
+#Plot section totals
+
+p_bar <- ggplot(section_totals_full,
+                aes(x = sectionid, y = total_basidia, fill = sectionid)) +
+  geom_col(color = "black") +
+  geom_text(
+    aes(label = ifelse(total_basidia > 0, total_basidia, "")),
+    vjust = -0.3,
+    size = 3
+  ) +
+  labs(
+    x = NULL,
+    y = "Total basidia observed"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x  = element_blank(),
+    axis.ticks.x = element_blank(),
+    legend.position = "none"
+  )
+
+#Plot stacked bar plot
+ggplot(
+  basidia_totals,
+  aes(x = sectionid, y = total_basidia, fill = specimen_id)
+) +
+  geom_col(color = "black", linewidth = 0.1) +
+  labs(
+    x = "Amanita section",
+    y = "Total number of basidia observed",
+    fill = "Specimen ID",
+    title = "Total basidia per section, colored by contributing specimen"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "right"
+  )
+```
+
 
