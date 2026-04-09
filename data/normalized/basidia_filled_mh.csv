@@ -1,0 +1,145 @@
+﻿specimen_id,species,sectionid,basidia_count,min_length,avg_length,max_length,min_width,avg_width,max_width,4s/basidia,3s/basidia,2s/basidia,s/basidia,min_s_length,avg_s_length,max_s_length
+30181,Amanita bisporigera,Phalloideae,24,24,31.14166667,39.5,6.5,8.579166667,10,0,0,24,0,2,5.891666667,8.5
+30182,Amanita suballiacea,Phalloideae,25,40,44.78,52,10,12.688,15.5,13,0,10,1,3,5.486363636,9.5
+30183,Amanita oberwinklerana,Roanokensis,25,32,35.16,39.5,10,11.628,13,23,0,0,0,2,5.404347826,8.5
+30184,Amanita suballiacea,Phalloideae,17,27.5,38.5,48.5,7,11.32352941,14,10,2,4,1,4,7.117647059,10.5
+30185,Amanita sp aurorae,Vaginatae,7,32.5,38.64285714,42,10,12.85714286,15,3,0,3,0,3.5,4.914285714,9
+30186,Amanita fusca,Vaginatae,15,56,68.53333333,81,14.5,16.11666667,19,15,0,0,0,6,7.833333333,9.5
+30187,Amanita suballiacea,Phalloideae,15,35,41.39285714,48.5,10,11.86666667,14.5,9,0,6,0,2,3.666666667,5.5
+30188,Amanita sp longicuneus,Vaginatae,15,37,49.26666667,57,14.5,15.9,17.5,1,0,13,0,2,4.5,7.5
+30189,Amanita rhacopus,Vaginatae,22,34.5,46.56818182,55,12.5,15.40909091,17,15,0,7,0,5,5.863636364,7.5
+30190,Amanita frostiana,Amanita,15,46,53.93333333,65.5,10.5,13.1,14.5,15,0,0,0,1.5,3.333333333,4.5
+30191,Amanita frostiana,Amanita,15,40.5,49.46666667,60,11,12.70666667,15,14,0,1,0,1.5,5.092857143,8
+30192,Amanita muscaria var. guessowii,Amanita,7,41.5,49,52,10,11.85714286,13.5,3,0,4,0,2.5,4.5,10
+30193,Amanita albiceps,Vaginatae,15,37.5,46.8,59,12.5,14.53333333,16,13,1,1,0,4,5.142857143,6.5
+30194,Amanita sp,Vaginatae,11,46.5,51,55.5,12.5,15.18181818,16.5,10,0,0,0,4,4.5,5
+30195,Amanita amerivirosa,Phalloideae,7,46.5,52.5,59,11.5,13.14285714,14.5,6,0,1,0,3.5,5.285714286,7
+30196,Amanita muscaria var. guessowii,Amanita,10,39.5,44.6,50,8.5,10.75,12,9,0,1,0,3.5,4.333333333,6
+30197,Amanita muscaria var. guessowii,Amanita,2,39,39,39,9.5,9.75,10,1,1,0,0,4,4.25,4.5
+30198,Amanita mortenii/sinicoflava,Vaginatae,10,59,66.85,73,16,17.4,20,9,0,1,0,5,7.375,10.5
+30199,Amanita bisporigera,Phalloideae,10,36.5,39.7,44,9.5,11.25,12,0,0,8,2,6,9.4,14.5
+30200,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30201,Amanita flavoconia,Validae,13,35,38.88461538,43.5,9,11.41666667,13,11,0,2,0,3,4.181818182,7
+30202,Amanita porphyria,Validae,15,35.5,42.66666667,51.5,10.5,12.66666667,14.5,14,1,0,0,3.5,5.666666667,7
+30203,Amanita amerivirosa,Phalloideae,15,45,52.4,60,12,13.63333333,15,10,2,3,0,3.5,6.178571429,8
+30204,Amanita amerivirosa,Phalloideae,12,44,53.54166667,67,11,13.20833333,15.5,11,0,1,0,3.5,5.818181818,8
+30205,Amanita flavoconia,Validae,10,33,38.15,43,9,11.4,13.5,10,0,0,0,3.5,4.75,5.5
+30206,Amanita flavoconia,Validae,9,34,37.57142857,40,7,9.833333333,14,6,0,2,1,4,5.166666667,8
+30207,Amanita porphyria,Validae,10,30,39.1,45.5,10.5,11.85,13.5,10,0,0,0,5,6.777777778,9
+30208,Amanita aff citrina,Validae,8,45.5,48.5,52,10.5,11.5625,12.5,8,0,0,0,3,5.4375,7.5
+30209,Amanita amerivirosa,Phalloideae,11,49,56.86363636,69,12,15,25,11,0,0,0,4,5.863636364,8
+30210,Amanita muscaria var. guessowii,Amanita,,,,,,,,,,,,,,
+30211,Amanita muscaria var. guessowii,Amanita,,,,,,,,,,,,,,
+30212,Amanita firma,Amidella,12,40.5,44.66666667,51,9,10.25,11.5,10,1,1,0,3.5,4.590909091,6.5
+30213,Amanita aff citrina,Validae,7,38.5,42.35714286,49,9,9.714285714,11,4,0,3,0,3,4.857142857,7
+30214,Amanita aff citrina,Validae,,,,,,,,,,,,,,
+30215,Amanita sp 61,Vaginatae,4,48,65.375,77,13,16.625,21,4,0,0,0,5.5,6.625,8
+30216,Amanita aff citrina,Validae,,,,,,,,,,,,,,
+30217,Amanita aff citrina,Validae,,,,,,,,,,,,,,
+30218,Amanita aff citrina,Validae,,,,,,,,,,,,,,
+30219,Amanita aff citrina,Validae,,,,,,,,,,,,,,
+30220,Amanita sp 61,Vaginatae,,,,,,,,,,,,,,
+30221,Amanita multisquamosa,Amanita,7,34.5,43.28571429,49,9.5,11,12,0,0,6,1,3.5,5.642857143,7.5
+30222,Amanita multisquamosa,Amanita,10,38.5,48.1,53.5,10,11.1,12.5,10,0,0,0,3,5.3,7.5
+30223,Amanita multisquamosa,Amanita,,,,,,,,,,,,,,
+30224,Amanita multisquamosa,Amanita,,,,,,,,,,,,,,
+30225,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30226,Amanita aff gemmata,Amanita,1,,,,11,11,11,0,0,0,0,,,
+30227,Amanita aff gemmata,Amanita,,,,,,,,,,,,,,
+30228,Amanita flavoconia,Validae,,,,,,,,,,,,,,
+30229,Amanita frostiana,Amanita,,,,,,,,,,,,,,
+30230,Amanita rubescens var alba,Validae,8,39.5,44.5,49,9.5,10.5625,12.5,8,0,0,0,5,5.5,6
+30231,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30232,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30233,Amanita rhacopus,Vaginatae,,,,,,,,,,,,,,
+30234,Amanita rhacopus,Vaginatae,,,,,,,,,,,,,,
+30235,Amanita solaniolens,Validae,,,,,,,,,,,,,,
+30236,Amanita solaniolens,Validae,,,,,,,,,,,,,,
+30237,Amanita albiceps,Vaginatae,,,,,,,,,,,,,,
+30238,Amanita flavorubens,Validae,13,29,33.38888889,44,8,8.846153846,11,0,0,9,0,1.5,4.416666667,6
+30239,Amanita virginiana,Caesareae,1,45.5,45.5,45.5,14.5,14.5,14.5,0,0,0,1,4,4,4
+30240,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30242,Amanita frostiana,Amanita,,,,,,,,,,,,,,
+30243,Amanita fulva,Vaginatae,,,,,,,,,,,,,,
+30244,Amanita cf coryli,Vaginatae,,,,,,,,,,,,,,
+30245,Amanita fulva,Vaginatae,,,,,,,,,,,,,,
+30246,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30247,Amanita griseoumbonata,Vaginatae,,,,,,,,,,,,,,
+30248,Amanita brunnescens,Validae,2,37,40.25,43.5,11.5,12,12.5,1,0,1,0,5.5,5.5,5.5
+30249,Amanita aff gemmata,Amanita,1,32,32,32,9,9,9,0,0,0,1,,,
+30250,Amanita cf coryli,Vaginatae,,,,,,,,,,,,,,
+30251,Amanita cf coryli,Vaginatae,,,,,,,,,,,,,,
+30252,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30253,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30254,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30255,Amanita fulva,Vaginatae,,,,,,,,,,,,,,
+30256,Amanita rhacopus,Vaginatae,,,,,,,,,,,,,,
+30257,Amanita albiceps,Vaginatae,,,,,,,,,,,,,,
+30258,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30259,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30260,Amanita solaniolens,Validae,,,,,,,,,,,,,,
+30261,Amanita frostiana,Amanita,,,,,,,,,,,,,,
+30262,Amanita sp subnigra,Vaginatae,,,,,,,,,,,,,,
+30263,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30264,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30265,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30267,Amanita amerivirosa,Phalloideae,,,,,,,,,,,,,,
+30268,Amanita sp jakeslandingensis,Vaginatae,,,,,,,,,,,,,,
+30269,Amanita amerivirosa,Phalloideae,,,,,,,,,,,,,,
+30270,Amanita amerivirosa,Phalloideae,,,,,,,,,,,,,,
+30271,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30272,Amanita brunnescens,Validae,,,,,,,,,,,,,,
+30273,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30274,Amanita firma,Amidella,,,,,,,,,,,,,,
+30275,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30276,Amanita aff molliuscula (IN46),Phalloideae,7,46.5,48.71428571,52,9,11.28571429,12.5,6,0,1,0,3.5,5.071428571,7.5
+30277,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30278,Amanita sp 61,Vaginatae,,,,,,,,,,,,,,
+30279,Amanita suballiacea,Phalloideae,,,,,,,,,,,,,,
+30280,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30281,Amanita fusca,Vaginatae,,,,,,,,,,,,,,
+30282,Amanita fusca,Vaginatae,,,,,,,,,,,,,,
+30283,Amanita flavorubens,Validae,,,,,,,,,,,,,,
+30284,Amanita suballiacea,Phalloideae,,,,,,,,,,,,,,
+30285,Amanita fusca,Vaginatae,,,,,,,,,,,,,,
+30286,Amanita porphyria,Validae,,,,,,,,,,,,,,
+30287,Amanita cf lavendula,Validae,,,,,,,,,,,,,,
+30291,Amanita cf lavendula,Validae,,,,,,,,,,,,,,
+30293,Amanita porphyria,Validae,,,,,,,,,,,,,,
+30295,Amanita banningiana,Validae,3,34.5,38.66666667,42,10,20.5,27.5,1,0,2,0,4,6,8
+30300,Amanita firma,Phalloideae,4,37.5,45,52,8.5,8.75,9.5,2,0,2,0,5,6.5,8.5
+40220,Amanita aff citrina,Phalloideae,,,,,,,,,,,,,,
+30187_2,Amanita suballiacea,Vaginatae,,,,,,,,,,,,,,
+30187_3,Amanita suballiacea,Vaginatae,,,,,,,,,,,,,,
+30193_2,Amanita albiceps,Vaginatae,,,,,,,,,,,,,,
+30193_3,Amanita albiceps,Phalloideae,,,,,,,,,,,,,,
+30194_2,Amanita sp,Phalloideae,,,,,,,,,,,,,,
+30199_2,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30199_3,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30199_4,Amanita bisporigera,Phalloideae,,,,,,,,,,,,,,
+30204_2,Amanita amerivirosa,Phalloideae,,,,,,,,,,,,,,
+30204_3,Amanita amerivirosa,Validae,,,,,,,,,,,,,,
+30204_4,Amanita amerivirosa,Amanita,,,,,,,,,,,,,,
+30208_2,Amanita aff citrina,Amanita,,,,,,,,,,,,,,
+30223_2,Amanita multisquamosa,Amanita,,,,,,,,,,,,,,
+30223_3,Amanita multisquamosa,Amanita,,,,,,,,,,,,,,
+30224_2,Amanita multisquamosa,Validae,,,,,,,,,,,,,,
+30226_2,Amanita aff gemmata,Validae,,,,,,,,,,,,,,
+30230_2,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30230_3,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30230_4,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30230_5,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30230_6,Amanita rubescens var alba,Validae,,,,,,,,,,,,,,
+30230_7,Amanita rubescens var alba,Caesareae,,,,,,,,,,,,,,
+30230_8,Amanita rubescens var alba,Amanita,,,,,,,,,,,,,,
+30239_2,Amanita virginiana,Vaginatae,,,,,,,,,,,,,,
+30249_2,Amanita aff gemmata,Vaginatae,,,,,,,,,,,,,,
+30250_2,Amanita cf coryli,Amidella,,,,,,,,,,,,,,
+30257_2,Amanita albiceps,Vaginatae,,,,,,,,,,,,,,
+30274_2,Amanita firma,Vaginatae,,,,,,,,,,,,,,
+30280_2,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30280_3,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30280_4,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30280_5,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30280_6,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
+30280_7,Amanita populiphila,Vaginatae,,,,,,,,,,,,,,
