@@ -163,8 +163,183 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
       aesthetics = "fill"
   ) +
   guides(color = "none") +
-  xlim(0, 20) +
+  xlim(0, 15) +
   ylim(0, 20) +
+  theme_minimal() +
+  labs(
+    title = "Basidiospore Measurements",
+    x = "Width (µm)",
+    y = "Length (µm)"
+  )
+
+plot (plot)
+
+#ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
+```
+```{r}
+
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore/basidiospore_by_specimen")
+getwd() #use to see what your current working directory is
+#rename each csv to spore30181, etc for easier coding
+spores30181 <- read.csv("30181_basidiospore.csv")
+spores30182 <- read.csv("30182_basidiospore.csv")
+spores30183 <- read.csv("30183_basidiospore.csv")
+spores30184 <- read.csv("30184_basidiospore.csv")
+spores30185 <- read.csv("30185_basidiospore.csv")
+spores30186 <- read.csv("30186_basidiospore.csv")
+spores30187 <- read.csv("30187_basidiospore.csv")
+spores30188 <- read.csv("30188_basidiospore.csv")
+spores30189 <- read.csv("30189_basidiospore.csv")
+spores30190 <- read.csv("30190_basidiospore.csv")
+spores30191 <- read.csv("30191_basidiospore.csv")
+spores30192 <- read.csv("30192_basidiospore.csv")
+spores30193 <- read.csv("30193_basidiospore.csv")
+spores30194 <- read.csv("30194_basidiospore.csv")
+spores30195 <- read.csv("30195_basidiospore.csv")
+spores30196 <- read.csv("30196_basidiospore.csv")
+spores30197 <- read.csv("30197_basidiospore.csv")
+spores30198 <- read.csv("30198_basidiospore.csv")
+spores30199 <- read.csv("30199_basidiospore.csv")
+spores30201 <- read.csv("30201_basidiospore.csv")
+spores30202 <- read.csv("30202_basidiospore.csv")
+spores30203 <- read.csv("30203_basidiospore.csv")
+spores30204 <- read.csv("30204_basidiospore.csv")
+spores30205 <- read.csv("30205_basidiospore.csv")
+spores30206 <- read.csv("30206_basidiospore.csv")
+spores30207 <- read.csv("30207_basidiospore.csv")
+spores30208 <- read.csv("30208_basidiospore.csv")
+spores30209 <- read.csv("30209_basidiospore.csv")
+spores30212 <- read.csv("30212_basidiospore.csv")
+spores30213 <- read.csv("30213_basidiospore.csv")
+spores30214 <- read.csv("30214_basidiospore.csv")
+spores30215 <- read.csv("30215_basidiospore.csv")
+spores30221 <- read.csv("30221_basidiospore.csv")
+spores30222 <- read.csv("30222_basidiospore.csv")
+spores30226 <- read.csv("30226_basidiospore.csv")
+spores30230 <- read.csv("30230_basidiospore.csv")
+spores30238 <- read.csv("30238_basidiospore.csv")
+spores30239 <- read.csv("30239_basidiospore.csv")
+spores30244 <- read.csv("30244_basidiospore.csv")
+spores30249 <- read.csv("30249_basidiospore.csv")
+spores30300 <- read.csv("30300_basidiospore.csv")
+spores30295 <- read.csv("30295_basidiospore.csv")
+spores30276 <- read.csv("30276_basidiospore.csv")
+spores30274 <- read.csv("30274_basidiospore.csv")
+spores30248 <- read.csv("30248_basidiospore.csv")
+spores30245 <- read.csv("30245_basidiospore.csv")
+
+
+# $Sample to add new column with speices ID to each basidiospore measurement
+spores30181$Sample <- "30181"
+spores30182$Sample <- "30182"
+spores30183$Sample <- "30183"
+spores30184$Sample <- "30184"
+spores30185$Sample <- "30185"
+spores30186$Sample <- "30186"
+spores30187$Sample <- "30187"
+spores30188$Sample <- "30188"
+spores30189$Sample <- "30189"
+spores30190$Sample <- "30190"
+spores30191$Sample <- "30191"
+spores30192$Sample <- "30192"
+spores30193$Sample <- "30193"
+spores30194$Sample <- "30194"
+spores30195$Sample <- "30195"
+spores30196$Sample <- "30196"
+spores30197$Sample <- "30197"
+spores30198$Sample <- "30198"
+spores30199$Sample <- "30199"
+spores30201$Sample <- "30201"
+spores30202$Sample <- "30202"
+spores30203$Sample <- "30203"
+spores30204$Sample <- "30204"
+spores30205$Sample <- "30205"
+spores30206$Sample <- "30206"
+spores30207$Sample <- "30207"
+spores30208$Sample <- "30208"
+spores30209$Sample <- "30209"
+spores30212$Sample <- "30212"
+spores30213$Sample <- "30213"
+spores30214$Sample <- "30214"
+spores30215$Sample <- "30215"
+spores30221$Sample <- "30221"
+spores30222$Sample <- "30222"
+spores30226$Sample <- "30226"
+spores30230$Sample <- "30230"
+spores30238$Sample <- "30238"
+spores30239$Sample <- "30239"
+spores30244$Sample <- "30244"
+spores30249$Sample <- "30249"
+spores30300$Sample <- "30300"
+spores30295$Sample <- "30295"
+spores30276$Sample <- "30276"
+spores30274$Sample <- "30274"
+spores30248$Sample <- "30248"
+spores30245$Sample <- "30245"
+
+str(spores30181) #sanity check to make sure data loaded
+
+head(spores30181) #sanity check to make sure data loaded
+
+#combines each specimen to one graph
+all_spores <- rbind(spores30181, spores30182, spores30183, spores30184, spores30185, spores30186, spores30187, spores30188, spores30189, spores30190, spores30191, spores30192, spores30193, spores30194, spores30195, spores30196, spores30197, spores30198, spores30199, spores30201, spores30202, spores30203, spores30204, spores30205, spores30206, spores30207, spores30208, spores30209, spores30212, spores30213, spores30214, spores30215, spores30221, spores30222, spores30226, spores30230, spores30238, spores30239, spores30244, spores30249, spores30300, spores30295, spores30276, spores30274, spores30248, spores30245)
+library(ggplot2)
+
+#groups each specimen by section
+group_map <- c(
+  "30181"="Phalloideae", "30182"="Phalloideae", "30183"="Roanokensis",
+  "30184"="Phalloideae", "30185"="Vaginatae", "30186"="Vaginatae",
+  "30187"="Phalloideae", "30188"="Vaginatae", "30189"="Vaginatae",
+  "30190"="Amanita", "30191"="Amanita", "30192"="Amanita",
+  "30193"="Vaginatae", "30194"="Vaginatae", "30195"="Phalloideae",
+  "30196"="Amanita", "30197"="Amanita", "30198"="Vaginatae",
+  "30199"="Phalloideae", "30201"="Validae", "30202"="Validae",
+  "30203"="Phalloideae", "30204"="Phalloideae", "30205"="Validae",
+  "30206"="Validae", "30207"="Validae", "30208"="Validae",
+  "30209"="Phalloideae", "30212"="Amidella", "30213"="Validae",
+  "30214"="Validae", "30215"="Vaginatae",
+  "30221"="Amanita", "30222"="Amanita", "30226"="Amanita",
+  "30230"="Validae", "30238"="Validae", "30239"="Caesareae",
+  "30244"="Vaginatae", "30249"="Amanita", "30300"="Amidella", "30295"="Caesareae", "30276"="Phalloideae", "30274"="Amidella", "30248"="Validae", "30245"="Vaginatae"
+)
+all_spores$Group <- group_map[all_spores$Sample]
+
+# Set custom legend order
+all_spores$Group <- factor(
+  all_spores$Group,
+  levels = c(
+    "Roanokensis",
+    "Amidella",
+    "Validae",
+    "Phalloideae",
+    "Amanita",
+    "Vaginatae",
+    "Caesareae"
+  )
+)
+
+
+plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
+  geom_jitter(shape = 21, size = 2, alpha = 0.7, width = 0.25, height = 0.25) +
+
+  #formating
+  scale_fill_manual(
+    name = "Section",
+    values = c(
+      "Roanokensis"="magenta",
+      "Phalloideae"="blue",
+      "Vaginatae"="yellow",
+      "Amanita"="red",
+      "Validae"="green",
+      "Caesareae"="orange",
+      "Amidella"="purple"
+    ),
+      aesthetics = "fill"
+  ) +
+  guides(color = "none") +
+  xlim(5, 15) +
+  ylim(5, 20) +
   theme_minimal() +
   labs(
     title = "Basidiospore Measurements",
@@ -224,7 +399,8 @@ bar_plot <- ggplot(section_counts, aes(x = Group, y = n_spores, fill = Group)) +
   ) +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(size = 14, angle = 45, hjust = 1),
+    
   )
 
 bar_plot
@@ -233,6 +409,66 @@ bar_plot
 
 
 ```
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Count unique species per section
+species_per_section <- all_spores2 %>%
+  group_by(sectionid) %>%
+  summarise(
+    n_species = n_distinct(Species_clean)
+  )
+
+# Apply your custom section order
+section_order <- c(
+  "Roanokensis",
+  "Amidella",
+  "Validae",
+  "Phalloideae",
+  "Amanita",
+  "Vaginatae",
+  "Caesareae"
+)
+
+species_per_section$sectionid <- factor(
+  species_per_section$sectionid,
+  levels = section_order
+)
+
+# Section colors
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloideae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Caesareae"="orange",
+  "Amidella"="purple"
+)
+
+# Plot
+species_plot <- ggplot(species_per_section,
+                       aes(x = sectionid, y = n_species, fill = sectionid)) +
+  geom_col(color = "black", width = 0.7) +
+  scale_fill_manual(values = section_colors) +
+  scale_y_continuous(breaks = 0:max(species_per_section$n_species)) +
+  labs(
+    title = "Number of Unique Species per Section",
+    x = "Section",
+    y = "Number of Unique Species"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(size = 14, angle = 45, hjust = 1),
+    legend.position = "none"
+  )
+
+species_plot
+
+
+```
+
 ```{r}
 library(dplyr)
 library(ggplot2)
@@ -289,7 +525,7 @@ sample_plot <- ggplot(samples_per_section, aes(x = Group, y = n_samples, fill = 
   # Theme adjustments
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(size = 14, angle = 45, hjust = 1),
   )
 
 # Custom section order
@@ -466,7 +702,7 @@ ggsave(
 library(dplyr)
 library(ggplot2)
 library(stringr)
-unique(lookup$sectionid)
+
 
 # ------------------------------------------------------------
 # 1. Load all basidiospore CSVs automatically (correct version)
@@ -494,6 +730,7 @@ lookup <- read.csv("data/rt_basidiospore/basidiospore.csv",
 
 # Ensure Sample is character for joining
 lookup$Sample <- as.character(lookup$specimen_id)
+unique(lookup$sectionid)
 
 # ------------------------------------------------------------
 # 3. Merge lookup into spore dataset
@@ -588,24 +825,262 @@ ggsave(
 
 ```
 
-
-
 ```{r}
-ggplot(all_spores2, aes(x = species_short, y = Q, color = sectionid)) +
-  geom_jitter(width = 0.2, alpha = 0.6, size = 1.8) +   # jittered points
-  scale_color_manual(values = section_colors) +
+#same thing but width
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+
+# ------------------------------------------------------------
+# 1. Load all basidiospore CSVs automatically (correct version)
+# ------------------------------------------------------------
+
+spore_files <- list.files(
+  "data/rt_basidiospore/basidiospore_by_specimen",
+  pattern = "*.csv",
+  full.names = TRUE
+)
+
+# Read each file AND add Sample ID inside the loop
+all_spores <- lapply(spore_files, function(f) {
+  df <- read.csv(f)
+  df$Sample <- str_extract(basename(f), "^\\d+")
+  df
+}) %>% bind_rows()
+
+# ------------------------------------------------------------
+# 2. Load species + section lookup table
+# ------------------------------------------------------------
+
+lookup <- read.csv("data/rt_basidiospore/basidiospore.csv",
+                   stringsAsFactors = FALSE)
+
+# Ensure Sample is character for joining
+lookup$Sample <- as.character(lookup$specimen_id)
+unique(lookup$sectionid)
+
+# ------------------------------------------------------------
+# 3. Merge lookup into spore dataset
+# ------------------------------------------------------------
+
+all_spores2 <- all_spores %>%
+  left_join(lookup, by = "Sample")
+
+# ------------------------------------------------------------
+# 4. Clean species names (Amanita → A.)
+# ------------------------------------------------------------
+
+all_spores2$Species_clean <- str_replace(all_spores2$species, "^Amanita ", "A. ")
+
+# ------------------------------------------------------------
+# 5. Remove any rows missing section assignment
+# ------------------------------------------------------------
+
+all_spores2 <- all_spores2 %>% filter(!is.na(sectionid))
+
+# ------------------------------------------------------------
+# 6. Normalize + order section names
+# ------------------------------------------------------------
+
+# Custom section order
+section_order <- c(
+  "Roanokensis",
+  "Amidella",
+  "Validae",
+  "Phalloideae",
+  "Amanita",
+  "Vaginatae",
+  "Caesareae"
+)
+
+all_spores2$sectionid <- factor(all_spores2$sectionid,
+                                levels = section_order)
+
+# ------------------------------------------------------------
+# 7. Order species by section, then alphabetically
+# ------------------------------------------------------------
+
+all_spores2$Species_clean <- factor(
+  all_spores2$Species_clean,
+  levels = all_spores2 %>%
+    distinct(Species_clean, sectionid) %>%
+    arrange(sectionid, Species_clean) %>%
+    pull(Species_clean)
+)
+
+# ------------------------------------------------------------
+# 8. Define section colors
+# ------------------------------------------------------------
+
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloideae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Caesareae"="orange",
+  "Amidella"="purple"
+)
+
+# ------------------------------------------------------------
+# 9. Species-level boxplot (no mean point)
+# ------------------------------------------------------------
+
+ggplot(all_spores2, aes(x = Species_clean, y = Width, fill = sectionid)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7, lwd = 0.4) +
+  scale_fill_manual(values = section_colors) +
   labs(
-    title = "Individual Basidiospore Q Values by Species",
+    title = "Basidiospore Width Distribution by Species",
     x = "Species",
-    y = "Q Ratio (Length ÷ Width)",
-    color = "Section"
+    y = "Basidiospore Width (µm)",
+    fill = "Section"
   ) +
   theme_minimal(base_size = 14) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
   )
 
+#ggsave
+ggsave(
+  filename = "basidiospore_species_boxplot.png",
+  plot = last_plot(),
+  width = 12,
+  height = 8,
+  dpi = 300,
+  path = path.expand("~/Desktop/wiscam_microscopy/data/rt_basidiospore")
+)
+
 ```
+```{r}
+#same thing but Q values
+
+library(dplyr)
+library(ggplot2)
+library(stringr)
+
+
+# ------------------------------------------------------------
+# 1. Load all basidiospore CSVs automatically (correct version)
+# ------------------------------------------------------------
+
+spore_files <- list.files(
+  "data/rt_basidiospore/basidiospore_by_specimen",
+  pattern = "*.csv",
+  full.names = TRUE
+)
+
+# Read each file AND add Sample ID inside the loop
+all_spores <- lapply(spore_files, function(f) {
+  df <- read.csv(f)
+  df$Sample <- str_extract(basename(f), "^\\d+")
+  df
+}) %>% bind_rows()
+
+# ------------------------------------------------------------
+# 2. Load species + section lookup table
+# ------------------------------------------------------------
+
+lookup <- read.csv("data/rt_basidiospore/basidiospore.csv",
+                   stringsAsFactors = FALSE)
+
+# Ensure Sample is character for joining
+lookup$Sample <- as.character(lookup$specimen_id)
+unique(lookup$sectionid)
+
+# ------------------------------------------------------------
+# 3. Merge lookup into spore dataset
+# ------------------------------------------------------------
+
+all_spores2 <- all_spores %>%
+  left_join(lookup, by = "Sample")
+
+# ------------------------------------------------------------
+# 4. Clean species names (Amanita → A.)
+# ------------------------------------------------------------
+
+all_spores2$Species_clean <- str_replace(all_spores2$species, "^Amanita ", "A. ")
+
+# ------------------------------------------------------------
+# 5. Remove any rows missing section assignment
+# ------------------------------------------------------------
+
+all_spores2 <- all_spores2 %>% filter(!is.na(sectionid))
+
+# ------------------------------------------------------------
+# 6. Normalize + order section names
+# ------------------------------------------------------------
+
+# Custom section order
+section_order <- c(
+  "Roanokensis",
+  "Amidella",
+  "Validae",
+  "Phalloideae",
+  "Amanita",
+  "Vaginatae",
+  "Caesareae"
+)
+
+all_spores2$sectionid <- factor(all_spores2$sectionid,
+                                levels = section_order)
+
+# ------------------------------------------------------------
+# 7. Order species by section, then alphabetically
+# ------------------------------------------------------------
+
+all_spores2$Species_clean <- factor(
+  all_spores2$Species_clean,
+  levels = all_spores2 %>%
+    distinct(Species_clean, sectionid) %>%
+    arrange(sectionid, Species_clean) %>%
+    pull(Species_clean)
+)
+
+# ------------------------------------------------------------
+# 8. Define section colors
+# ------------------------------------------------------------
+
+section_colors <- c(
+  "Roanokensis"="magenta",
+  "Phalloideae"="blue",
+  "Vaginatae"="yellow",
+  "Amanita"="red",
+  "Validae"="green",
+  "Caesareae"="orange",
+  "Amidella"="purple"
+)
+
+# ------------------------------------------------------------
+# 9. Species-level boxplot (no mean point)
+# ------------------------------------------------------------
+
+ggplot(all_spores2, aes(x = Species_clean, y = Q..length.width., fill = sectionid)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.7, lwd = 0.4) +
+  scale_fill_manual(values = section_colors) +
+  labs(
+    title = "Basidiospore Q-value Distribution by Species",
+    x = "Species",
+    y = "Basidiospore Q-value",
+    fill = "Section"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")
+  )
+
+#ggsave
+ggsave(
+  filename = "basidiospore_species_boxplot.png",
+  plot = last_plot(),
+  width = 12,
+  height = 8,
+  dpi = 300,
+  path = path.expand("~/Desktop/wiscam_microscopy/data/rt_basidiospore")
+)
+
+```
+
 
 ```{r}
 ggplot(all_spores2, aes(x = Width, y = Length, color = sectionid)) +
@@ -629,36 +1104,4 @@ ggplot(all_spores2, aes(x = Width, y = Length, color = sectionid)) +
 
 ```
 
-```{r}
-# Ensure Q exists
-all_spores$Q <- all_spores$Length / all_spores$Width
-
-# Convert Group to factor
-all_spores$Group <- as.factor(all_spores$Group)
-
-# ---- 1. Check normality assumption (optional but useful) ----
-library(ggplot2)
-
-ggplot(all_spores, aes(x = Group, y = Q, fill = Group)) +
-  geom_boxplot(alpha = 0.7) +
-  theme_minimal() +
-  labs(title = "Q Value Distribution by Section")
-
-# ---- 2. ANOVA test ----
-anova_model <- aov(Q ~ Group, data = all_spores)
-summary(anova_model)   # <-- This gives the p-value for section differences
-
-# ---- 3. Tukey post-hoc test ----
-tukey_results <- TukeyHSD(anova_model)
-tukey_results
-
-# ---- 4. If ANOVA assumptions fail, use Kruskal-Wallis ----
-kruskal.test(Q ~ Group, data = all_spores)
-
-# ---- 5. Dunn post-hoc test for non-parametric ----
-install.packages("FSA")
-library(FSA)
-dunnTest(Q ~ Group, data = all_spores, method = "bh")
-
-```
 
