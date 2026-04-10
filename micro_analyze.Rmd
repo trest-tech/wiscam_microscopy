@@ -350,7 +350,7 @@ plot <- ggplot(all_spores, aes(x = Width, y = Length, fill = Group)) +
 plot (plot)
 
 #ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
-
+ggsave("basidiospore_measurementes_2.png", plot, width = 10, height = 7, dpi = 300)
 ```
 
 ```{r}
@@ -943,7 +943,7 @@ ggplot(all_spores2, aes(x = Species_clean, y = Width, fill = sectionid)) +
 
 #ggsave
 ggsave(
-  filename = "basidiospore_species_boxplot.png",
+  filename = "basidiospore_species_boxplot_2.png",
   plot = last_plot(),
   width = 12,
   height = 8,
@@ -952,6 +952,7 @@ ggsave(
 )
 
 ```
+
 ```{r}
 #same thing but Q values
 
@@ -1071,7 +1072,7 @@ ggplot(all_spores2, aes(x = Species_clean, y = Q..length.width., fill = sectioni
 
 #ggsave
 ggsave(
-  filename = "basidiospore_species_boxplot.png",
+  filename = "basidiospore_species_boxplot_3.png",
   plot = last_plot(),
   width = 12,
   height = 8,
