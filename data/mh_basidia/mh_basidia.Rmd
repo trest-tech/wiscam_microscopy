@@ -297,6 +297,97 @@ stercount_plot <- ggplot(
     strip.background = element_blank()
   )
 ##To save the plot: ggsave(filename = stericount_species.png, plot = stericount_plot, width = 10, height = 6, units = "in", dpi = 300)
+
+##specimen level stacked bar-plot
+##====
+#Organizing by specimen instead of species
+##====
+library(tidyverse)
+
+ster_cols <- c("4s/basidia", "3s/basidia", "2s/basidia", "s/basidia")
+
+specimen_long <- basidia %>%
+  filter(if_any(all_of(ster_cols), ~ !is.na(.))) %>%
+  select(specimen_id, species, sectionid, all_of(ster_cols)) %>%
+  pivot_longer(
+    cols = all_of(ster_cols),
+    names_to = "sterigma_class",
+    values_to = "count"
+  ) %>%
+  filter(count > 0) %>%
+  mutate(
+    sterigmata = case_when(
+      sterigma_class == "4s/basidia" ~ "4",
+      sterigma_class == "3s/basidia" ~ "3",
+      sterigma_class == "2s/basidia" ~ "2",
+      sterigma_class == "s/basidia"  ~ "1"
+    )
+  )
+
+##====
+#Organizing phylogeneticall
+##====
+phylo_order <- c(
+  "Lepidella",
+  "Roanokensis",
+  "Amidella",
+  "Strobiloformes",
+  "Validae",
+  "Phalloideae",
+  "Arenariae",
+  "Amarrendiae",
+  "Amanita",
+  "Vaginatae",
+  "Caesareae"
+)
+
+specimen_long$sectionid <- factor(
+  specimen_long$sectionid,
+  levels = phylo_order
+)
+
+
+stercount_plot_v2 <- ggplot(
+  specimen_long,
+  aes(
+    x = specimen_id,
+    y = count,
+    fill = sterigmata
+  )
+) +
+  geom_col(
+    width = 1.0,
+    color = "black",
+    linewidth = 0.2,
+  ) +
+  facet_grid(
+    ~ species,
+    scales = "free_x",
+    space  = "free_x",
+    switch = "x" #Moves species names to bottom of graph rather than the top
+  ) +
+  scale_fill_brewer(
+    palette = "Pastel1",
+    name = "Sterigmata\nper basidium"
+  ) +
+  labs(
+    x = "Specimens (grouped by species)",
+    y = "Number of basidia observed",
+    title = "Sterigma composition of individual specimens within species"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x  = element_blank(),
+    axis.ticks.x = element_blank(),
+    strip.background = element_blank(),
+    strip.placement = "outside",
+    strip.text.x = element_text( #Editting species names text on graph
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1,
+      size = 8)
+  )
+
 ```
 
 

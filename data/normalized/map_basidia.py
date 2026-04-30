@@ -21,7 +21,7 @@ from pathlib import Path
 # ========= Paths =========
 TRAINING_PATH = Path("amanita_microscopy.xlsx")  # input workbook with raw sheets
 MASTER_PATH   = Path("basidia.xlsx")        # master table to update
-OUTPUT_PATH   = Path("basidia_filled.xlsx") # output file
+OUTPUT_PATH   = Path("basidia_filled_V2.xlsx") # output file
 
 # ========= Fixed range (Excel rows 32..57 inclusive; columns A..E) =========
 ROW_START = 32   # 1-based Excel row number
@@ -102,6 +102,18 @@ def pct_stats_min_avg_max(series: pd.Series) -> dict:
         count= int(x.size),
     )
 
+def parse_sterigma_count(x):
+    """
+    Extract sterigma number from cells like:
+    4, 4?, 2(?), 3 ?, etc.
+    Blank -> NaN
+    """
+    if pd.isna(x):
+        return np.nan
+    m = _num_rx.search(str(x))
+    return int(m.group(1)) if m else np.nan
+
+
 # ========= Core summarizer using fixed A:E, 32..57 =========
 def summarize_training_book_basidia_fixed(training_path: Path):
     xls = pd.ExcelFile(training_path, engine="openpyxl")
@@ -138,22 +150,27 @@ def summarize_training_book_basidia_fixed(training_path: Path):
         if basidia_count == 0:
             logs.append((sid, sheet, "no_numeric_in_fixed_range", 0, 0, 0))
             continue
+    
+        # ---------- Sterigma counting (DIRECT from column D) ----------
+        # Column D contains sterigma count per basidium
+        sterigma_vals = np.block.iloc[:, 3].map(parse_sterigma_count)
 
-        # Sterigma fields
-        S_counts = S_count_raw[keep_mask].map(parse_int_or_nan)
-        S_lens   = pd.to_numeric(S_len_raw[keep_mask].map(parse_float_or_nan), errors="coerce").mask(lambda s: s <= 0)
+        # Drop blanks / non-numeric cells
+        sterigma_vals = sterigma_vals.dropna().astype(int)
 
-        # Stats
-        Ls = pct_stats_min_avg_max(L2)
-        Ws = pct_stats_min_avg_max(W2)
+        # Count basidia by sterigma number
+        c4 = int((sterigma_vals == 4).sum())
+        c3 = int((sterigma_vals == 3).sum())
+        c2 = int((sterigma_vals == 2).sum())
+        c1 = int((sterigma_vals == 1).sum())
+
+        # Sterigma length stats (column E)
+        S_lens = pd.to_numeric(
+            S_len_raw[keep_mask].map(parse_float_or_nan),
+            errors="coerce"
+        ).mask(lambda s: s <= 0)
+
         Ss = pct_stats_min_avg_max(S_lens)
-
-        # Sterigma count categories
-        s_counts_valid = S_counts.dropna().astype(int)
-        c4 = int((s_counts_valid == 4).sum())
-        c3 = int((s_counts_valid == 3).sum())
-        c2 = int((s_counts_valid == 2).sum())
-        c1 = int((s_counts_valid == 1).sum())
 
         recs.append({
             "specimen_id": str(sid),

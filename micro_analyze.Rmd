@@ -1,12 +1,14 @@
 title: "micro_analyze"
 output: html_document
 date: "2026-02-26"
+
+All of this needs labeling and descriptions of what the code is doing:
 ```{r}
 
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore/basidiospore_by_specimen")
 getwd() #use to see what your current working directory is
-#rename each csv to spore30181, etc for easier coding
+#rename each csv to spore30181, spore30182, etc for easier coding
 spores30181 <- read.csv("30181_basidiospore.csv")
 spores30182 <- read.csv("30182_basidiospore.csv")
 spores30183 <- read.csv("30183_basidiospore.csv")
@@ -176,6 +178,7 @@ plot (plot)
 
 #ggsave("basidiospore_measurementes_20.png", plot, width = 10, height = 7, dpi = 300) to get .png file
 ```
+
 ```{r}
 
 setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore") #set your working directory
@@ -585,7 +588,6 @@ table(all_spores$Group, useNA = "ifany")
 
 ```
 
-
 ```{r}
 library(dplyr)
 library(ggplot2)
@@ -695,8 +697,6 @@ ggsave(
 
 ```
 #add, solaniolens,
-
-
 
 ```{r}
 library(dplyr)
@@ -1105,4 +1105,100 @@ ggplot(all_spores2, aes(x = Width, y = Length, color = sectionid)) +
 
 ```
 
+
+Building a graph that visualizes spore measurements per specimen as point and cross hairs
+  - First need to oragnize basidiospore data and assign each specimen their species and section names
+  - Organize each specimen dataframe into a list that is more manageable
+  - Build crosshair plot color coded for section
+  
+Below code just helps to organize basidiospores_filled.csv
+```{r}
+#Assigning species names to taxa
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore")
+
+library(readr)
+library(dplyr)
+library(stringr)
+
+# ---- Load specimen → species lookup ----
+specimen_lookup <- read_csv("specimen_lookup.csv", show_col_types = FALSE)
+
+# Ensure types are correct
+specimen_lookup$specimen_id <- as.character(specimen_lookup$specimen_id)
+
+# ---- Directory with spore CSVs ----
+data_dir <- "basidiospore_by_specimen"
+
+csv_files <- list.files(
+  path = data_dir,
+  pattern = "_basidiospore\\.csv$",
+  full.names = TRUE
+)
+
+# ---- Container for data frames ----
+spore_dfs <- list()
+
+# ---- Explicit for-loop (robust and clear) ----
+for (f in csv_files) {
+
+  # Extract specimen ID from filename
+  specimen_id <- str_extract(basename(f), "\\d+")
+
+  # Read CSV
+  df <- read_csv(f, show_col_types = FALSE)
+
+  # Look up species
+  species_name <- specimen_lookup$species[
+    specimen_lookup$specimen_id == specimen_id
+  ]
+
+  # Defensive check
+  if (length(species_name) == 0) {
+    warning(paste("No species found for specimen", specimen_id))
+    species_name <- NA_character_
+  }
+
+  # Add metadata
+  df <- df %>%
+    mutate(
+      specimen_id = specimen_id,
+      species = species_name
+    )
+
+  # Store in list, named by specimen_id
+  spore_dfs[[specimen_id]] <- df
+}
+
+spore_all <- bind_rows(spore_dfs)
+
+# We actually have to summarize the data for each of these specimens anyways which is going to be easier to do by using basidiospore_filled.csv which has min-10p-90p-max values but I realize they need to have averages as well. So we are going to compute average spore length and width for each specimen and add it to basidiospore_filled.csv
+
+
+avg_spores <- spore_all %>%
+  group_by(specimen_id) %>%
+  summarise(
+    mean_length = mean(Length, na.rm = TRUE),
+    mean_width  = mean(Width,  na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+```
+  
+Data set 'basidiospores_filled.csv' is complete and can now be used to generate 2 figures:
+  1. Crosshairs plot visualizing each specimens spore shape measurement space
+  2. Qvalue variation for specimens grouped by species and section
+  
+```{r}
+setwd("~/Desktop/wiscam_microscopy/data/rt_basidiospore")
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(stringr)
+
+#Load .csv
+spore_range <- read_csv("basidiospore_filled.csv", show_col_types = FALSE)
+
+
+```
 
